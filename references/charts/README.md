@@ -47,6 +47,10 @@ must never happen), and the pitfalls (what already broke in real runs).
   converged on one region ~12px apart in run 5's relation map.)
 - If edges would collide, reroute (curved corridors), shorten labels, or
   drop non-pivotal edges into the tooltip/caption.
+- **Marker arrows don't draw-in.** `stroke-dasharray` hides only the
+  stroke — an SVG `<marker>` arrowhead stays visible before the path
+  appears. Use a fade-in for arrowed paths, or accept the arrowhead
+  early. (Learned from the paper run: all arrows switched to fade.)
 
 ## Signed-value charts (positive/negative data)
 

@@ -43,10 +43,10 @@ count is part of the visual identity (restraint = the aesthetic).
 *Status:* in use.
 
 ### D7. Log scale only when the range demands it, declared in caption
-BDI 307 → 10843 (35×) cannot be read linearly; log scale flattens the
-noise of the boom and reveals the long low plateau. Any log axis is
-stated in the figcaption. *Reason:* honest encoding — the reader must
-know the scale they are reading. *Status:* in use.
+A series spanning 307 → 10843 (35×) cannot be read linearly; log scale
+flattens the noise of the boom and reveals the long low plateau. Any
+log axis is stated in the figcaption. *Reason:* honest encoding — the
+reader must know the scale they are reading. *Status:* in use.
 
 ### D8. Workflows grow from runtime gaps, glyphs grow the same way
 New input types and new shapes are handled by the closest existing
@@ -106,3 +106,12 @@ as *proven forms* — available information for the author, not mandatory
 drawings (D11 still governs). *Reason:* the skill's value grows by
 accumulating what worked, while leaving execution free. *Status:* in
 use.
+
+### D16. `--faint` is never a data color (2026-08)
+A 4.5% ring segment rendered in `--faint` was invisible against the
+paper ground (contrast ≈1.4:1). Data series colors come from
+`--accent`/`--ink`/`--muted` only; small segments get MORE ink, not
+less; a fourth series color requires a new token. *Reason:* faint
+exists for the text hierarchy, not for carrying data; visibility is a
+hard requirement. *Status:* in use (tokens.md Color roles + ring.md
+Rules).

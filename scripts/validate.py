@@ -67,6 +67,18 @@ def main() -> int:
     if "var(--bg)" not in html:
         warns.append("token variables not referenced (var(--bg) absent)")
 
+    # 10. data series classes must not use --faint (D16: faint is a text
+    #     layer, too low-contrast ≈1.4:1 to carry data)
+    faint_data = re.findall(
+        r'\.(?:seg|bar|dot|series|chip|ring|arc|point)[^{}]*\{[^}]*var\(--faint\)',
+        html,
+    )
+    if faint_data:
+        warns.append(
+            f"data series class uses --faint (invisible on paper, use --ink/"
+            f"muted/accent): {sorted(set(faint_data))[:4]}"
+        )
+
     print(f"validate {path.name}  ({len(html)/1024:.1f} KB)")
     for w in warns:
         print(f"  WARN  {w}")

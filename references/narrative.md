@@ -23,15 +23,15 @@ source line       where everything came from
 Provenance and scope, not decoration: what domain, what period, as of
 when. No verbs.
 
-> GLOBAL SHIPPING · DATA AS OF 2026-07-10
+> SECTOR REPORT · DATA AS OF 2026-07-10
 
 ### 2. Title — the conclusion, not the topic
 
 A judgment, in one sentence, in the author's voice. If the title could
 also headline a Wikipedia article, it is a topic — rewrite it as a claim.
 
-- Topic: "Shipping Cycles" ✗
-- Claim: "Shipping is not one cycle" ✓
+- Topic: "Quarterly Earnings" ✗
+- Claim: "Earnings turned, and nobody priced it" ✓
 
 Chinese titles may use the same rule: 结论，不是话题。
 
@@ -41,9 +41,8 @@ One or two sentences that state *why the conclusion is worth reading*:
 the contradiction, the surprise, the question it answers. Muted, 15px,
 max-width 560px.
 
-> The same shock lifted all three freight curves, but the orderbook
-> decides the three roads. Read them as one cycle and you get the 2007
-> script.
+> The headline number rose, but the split tells the real story: the
+> growth is not where the market is looking.
 
 ### 4. Key numbers
 
@@ -88,8 +87,8 @@ blocks. When assembling:
   section *really* need this skeleton, or was it the path of least
   resistance? If a different shape fits equally well (a lane diagram
   instead of a branch tree, a mirror instead of arrows), use it —
-  variety is the byproduct of honest fit, not a target. (User feedback
-  from run 5: three of four sections were arrow-connection maps.)
+  variety is the byproduct of honest fit, not a target. (Run 5: three
+  of four sections were arrow-connection maps.)
 
 ### 5. Chart blocks
 
@@ -102,8 +101,8 @@ SVG         the chart itself
 takeaway    the reading: what the eye should take from this chart
 ```
 
-- **figtitle is a claim** like the page title. "Dry bulk: from 10843 to
-  307" beats "BDI monthly average".
+- **figtitle is a claim** like the page title. "From 10843 to 307" beats
+  "monthly average".
 - **figcaption carries the honesty load**: unit, log scale if used,
   sampling, missing data, rounding ("rounding ate 2 people"). If a chart
   needs no honesty notes, it still gets unit + period.

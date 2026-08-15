@@ -85,6 +85,21 @@ Sizes are minimums for readability; never shrink to fit — restructure.
 No cards, no borders around content, no shadows — whitespace and hairlines
 separate. One visual motif per page.
 
+## Color roles
+
+- `--bg` page ground · `--ink` primary text / strongest ink · `--muted`
+  secondary text, captions, labels · `--faint` tertiary text, source
+  line, axis labels · `--grid` hairlines · `--accent` the story color
+  (one per page, author-chosen, never a user control).
+- **Data series colors come from `--accent`, `--ink`, `--muted` only.**
+  `--faint` is a text/decoration layer — too low-contrast (≈1.4:1 on
+  paper) to carry data. Small shares / small series need MORE ink, not
+  less: the smallest segment gets `--ink`, the largest gets `--accent`.
+  A fourth series color requires adding a token, not silently using
+  `--faint`.
+- Day theme accent is vermillion, night theme accent is gold — the
+  accent value itself changes with the theme, but its role doesn't.
+
 ## Motion
 
 | Effect | Params | When |

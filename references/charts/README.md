@@ -62,6 +62,11 @@ For data with both signs (PPI-style 涨跌), the zero line is the base:
   (Learned from the PPI run 7; the grow-n variant.)
 - Axes are never truncated to hide the sign change; if the range is
   huge, note it in the caption.
+- Diverging bars: value labels sit at the bar **tail for both signs**;
+  keep the category-name column wide enough that a short negative
+  bar's tail label never reaches it (right-aligned names at x=250 kept
+  a 54px gap in the PPI page). (Real bug: three negative labels
+  overlapped their category names.)
 
 ## Extending the library
 

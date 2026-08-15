@@ -26,8 +26,14 @@ charts: a donut with the total in the center.
 - Rounded segment ends only if segments are ≥6% (else they obscure
   neighbors).
 - Count-up the center total on enter.
+- Segment colors from `--accent` / `--ink` / `--muted` — never
+  `--faint` (data color rule in `tokens.md`). Small segments need MORE
+  ink: largest share gets `--accent`, smallest visible share gets
+  `--ink`. (A 4.5% segment in faint is invisible on paper, ≈1.4:1.)
 
 ## Pitfalls
 
 - Very thin segments with inside labels (unreadable — label outside).
 - Exploding slices for decoration (breaks the angle contract).
+- A segment drawn in `--faint` or another low-contrast color — it
+  disappears on paper. See Rules.

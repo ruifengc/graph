@@ -1,8 +1,7 @@
 # Expression · Relations
 
 Directed relationship map — who curries favor with whom, who hates
-whom, who protects whom. **Validated in transcript run 1** (the
-讨好链/灭口链 map was judged "不错的表达结构" by the user); keep the
+whom, who protects whom. **Validated in transcript run 1**; keep the
 conventions that worked.
 
 ## When to use
@@ -32,9 +31,9 @@ drama recaps, political/company power maps, ecosystem analyses.
 
 - No node without a label; no edge without a direction.
 - **Edge labels stay short.** A relation label is ≤ ~10 chars on the
-  chart ("沙→陈 · 登门探望"); anything longer goes into the tooltip.
+  chart ("A→B · 关系动词短语"); anything longer goes into the tooltip.
   Long labels stacked between nodes read as text dumped on the diagram
-  (user feedback from run 4: "文字太多了，直接堆在这里").
+  (run 4 feedback).
 - **Don't let edges of one node fan into a label pile.** When a node has
   many relations (e.g. one person connecting to everyone), stagger the
   labels, route edges through separate corridors, or keep only the

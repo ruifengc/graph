@@ -22,8 +22,9 @@ Same seven-step pipeline as `article.md` — the differences:
 Auto-transcripts are noisy. Rules that held in practice:
 
 - **Fix obvious hearing errors by context**, and say so in the footer
-  ("恒生科学"→恒生科技; 人名听写错误按规范统一). The page uses the
-  corrected form; the footer admits the correction happened.
+  (e.g. a mis-transcribed proper noun corrected to its canonical form).
+  The page uses the corrected form; the footer admits the correction
+  happened.
 - **Never guess an entity you can't resolve.** If a spoken name can't
   be mapped to anything confirmable, drop it — don't put a placeholder
   name on the page.

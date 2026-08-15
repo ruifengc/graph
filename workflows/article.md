@@ -27,7 +27,8 @@ Write down (in your working notes, not yet on the page):
 ### 3. Decide the narrative (references/narrative.md)
 
 - Kicker: domain · scope · as-of date.
-- Title: the core claim as a judgment ("Shipping is not one cycle").
+- Title: the core claim as a judgment (e.g. "Earnings turned, and
+  nobody priced it").
 - Sub-line: the tension — why this claim is surprising or worth reading.
 - Key numbers: 2–4 strongest numbers from Evidence, each with label +
   note.
@@ -64,22 +65,3 @@ hover working on every chart? both themes readable? Report
   improvised, any new shape/glyph/workflow insight.
 
 No archive, no completion (SKILL.md rule).
-
-## Example (worked, abbreviated)
-
-Input: the shipping analysis used for the style lab (global freight,
-three sub-sectors, orderbook divergence).
-
-- Core claim: shipping is not one cycle — same price shock, three
-  different orderbook positions.
-- Evidence ranked: orderbook shares 38.7% / 7% / 14.7%; BDI 10843 →
-  307; SCFI event peaks.
-- Shapes: 3 key numbers; one series (BDI, log); one comparison
-  (orderbook shares).
-- Narrative: kicker "GLOBAL SHIPPING · DATA AS OF 2026-07-10"; title
-  "Shipping is not one cycle"; sub-line the tension; numbers with
-  source notes; one line chart + takeaway; source line.
-- Glyphs: line (log, annotated peak/trough) + key-number row.
-- Pitfalls hit (all now in `references/charts/line.md`): integer-year x
-  tridents, clipped top annotation, hover px/year mixup, peak missing
-  from sampled data.

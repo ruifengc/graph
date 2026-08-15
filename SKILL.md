@@ -7,9 +7,11 @@ description: >-
   wants a piece of content or data "turned into a page / visualized / made
   into charts / an HTML report to look at" without specifying a tool. The
   output is a self-contained page with day/night themes, hand-written SVG
-  charts, hover-to-read values, and all generated assets inlined. Not for
-  technical schematic diagrams (architecture/flow/sequence), not for bare
-  chart cards without narrative.
+  charts, hover-to-read values, and all generated assets inlined.
+  Schematic/technical visuals (architecture, flow, sequence) are
+  allowed when the content demands them — a technical article may need
+  a data-flow diagram — but never as bare diagram cards: the explainer
+  framing stays.
 ---
 
 # Graph — Content to Explainer HTML

@@ -123,9 +123,12 @@ One self-contained `output.html`:
 4. **Honest encoding.** Bar length, dot count, ring angle, area size all
    map to real quantities. Log axes are declared in the caption. Rounded
    totals are footnoted, not silently fixed.
-5. **Motion and interaction stay minimal.** Two interactions, two motion
-   effects, `prefers-reduced-motion` always honored. An effect that needs a
-   new layout to exist does not deserve to exist.
+5. **Motion and interaction stay minimal.** Two interactions by
+   default (hover-to-read, theme toggle) plus one author-optional
+   third (interactive comparison, when the content's core is a
+   contrast — see `references/interactions.md`). Two motion effects,
+   `prefers-reduced-motion` always honored. An effect that needs a new
+   layout to exist does not deserve to exist.
 6. **One page, one argument; chart count follows the content.** The page
    serves a single core claim. Each chart carries one independent
    conclusion — a long input with rich evidence earns more charts, a short

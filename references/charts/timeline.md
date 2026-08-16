@@ -7,7 +7,29 @@ Events on a time axis — sequence, causality, milestones, life stories.
 - A narrative with dated events (company history, product life, a crisis
   unfolding, a paper's development).
 - Comparing when things happened relative to each other.
-- ≤12 events; more → group or highlight only the pivotal ones.
+- ≤12 events: the default step form below. Larger sets (a field's whole
+  history, a product lineage of 20+ releases) use the chronicle mode.
+
+## Chronicle mode — large event sets
+
+A horizontal track for 15–60 events: the reader scrolls the rail while
+each event card carries a one-line identity and click reveals the full
+detail. This is how a "history of X" page holds a whole field.
+
+- **Time maps linearly and honestly** on the x-axis (a date → a
+  position). No fake spacing for drama; if dates are approximate, say
+  so in the caption.
+- Events alternate **above/below the rail** so adjacent cards never
+  overlap (even index up, odd down — a layout, not a style).
+- Cards are compact: org/date + name. Full detail (a paragraph, the
+  significance) lives in a detail panel opened by **click**, not in the
+  card itself.
+- The rail itself is a DOM element of explicit width (scrollable), not
+  a squeezed SVG — labels must stay readable.
+- The protagonist line (the series the story follows) gets the accent;
+  other camps stay on the ladder.
+- Pivotal events may get a marker on the rail even before they are
+  reached; no decoration beyond that.
 
 ## Data contract
 

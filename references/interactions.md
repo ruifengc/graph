@@ -1,7 +1,8 @@
 # Interactions
 
-Exactly two interactions exist in a graph page. Anything else needs a
-stated reason and a runtime note.
+Two interactions are the default; a third is author-optional for
+comparison-driven content. Anything beyond needs a stated reason and a
+runtime note.
 
 ## 1. Hover-to-read
 
@@ -48,6 +49,23 @@ Purpose: day/night reading. A pill toggle in the page corner.
 - `localStorage` persistence is optional; default to day on first visit.
 - Charts must be readable in both themes: SVG elements use `var(--...)`
   tokens, never hardcoded colors.
+
+## 3. Interactive comparison (author-optional)
+
+A reader-operable comparison — two approaches, two decoders, two
+generations — where the reader drives the switch (a lever, a slider, a
+toggle between two modes). Its purpose is understanding: "see both
+sides with your own hands".
+
+- **Use only when the content's core IS a comparison** (two strategies,
+  two decoding schemes, old vs new pipeline). If the page's argument
+  doesn't hinge on contrast, don't add it.
+- Must serve the explanation: each side gets the same honest encoding,
+  the same caption duty, the same source line. It is two charts sharing
+  one frame, not a toy.
+- Degrades under `prefers-reduced-motion` to a static both-sides view.
+- The author records the reason in runtime notes (this is the one
+  interaction that exists only because the content demanded it).
 
 ## Motion (the only two effects)
 

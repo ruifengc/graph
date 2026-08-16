@@ -76,6 +76,23 @@ blocks. When assembling:
   `01 · 时间线` or `二 · 关系`. The eyebrow makes the section hierarchy
   readable at a glance; a hairline alone does not separate sections
   (user feedback from run 2).
+
+### Long-page enhancements (optional, pages with >6 sections)
+
+Short pages need none of this. Long pages (a deep dive, a full
+chronicle) earn three structural aids:
+
+- **Sticky section titles**: the current section's title stays pinned
+  to the top of the viewport while its charts scroll past — the reader
+  always knows which chapter they are inside. Pure CSS (`position:
+  sticky`).
+- **Section navigation**: a slim fixed rail on the side listing the
+  sections; the active one is highlighted as you scroll (scrollspy via
+  IntersectionObserver). For pages long enough that jumping matters.
+- **Big-information components**: a horizontal chronicle rail (see
+  `charts/timeline.md` chronicle mode) or a full comparison matrix
+  belong to long pages — they exist because the content is big, not
+  for their own sake.
 - **Charts are compositions**: axis, labels, annotations, and caption
   form one readable object. A chart whose elements read as scattered
   fragments (e.g. dots pinned to a baseline) is not finished — see

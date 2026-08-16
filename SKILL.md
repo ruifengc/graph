@@ -125,8 +125,9 @@ One self-contained `output.html`:
    totals are footnoted, not silently fixed.
 5. **Motion and interaction stay minimal.** Two interactions by
    default (hover-to-read, theme toggle) plus one author-optional
-   third (interactive comparison, when the content's core is a
-   contrast — see `references/interactions.md`). Two motion effects,
+   third (an interactive experiment, when the reader changing a
+   condition — threshold, caliber, parameter — reveals the point;
+   see `references/interactions.md`). Two motion effects,
    `prefers-reduced-motion` always honored. An effect that needs a new
    layout to exist does not deserve to exist.
 6. **One page, one argument; chart count follows the content.** The page

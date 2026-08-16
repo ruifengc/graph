@@ -1,8 +1,8 @@
 # Interactions
 
 Two interactions are the default; a third is author-optional for
-comparison-driven content. Anything beyond needs a stated reason and a
-runtime note.
+content that invites reader manipulation. Anything beyond needs a
+stated reason and a runtime note.
 
 ## 1. Hover-to-read
 
@@ -50,22 +50,32 @@ Purpose: day/night reading. A pill toggle in the page corner.
 - Charts must be readable in both themes: SVG elements use `var(--...)`
   tokens, never hardcoded colors.
 
-## 3. Interactive comparison (author-optional)
+## 3. Interactive experiment (author-optional)
 
-A reader-operable comparison — two approaches, two decoders, two
-generations — where the reader drives the switch (a lever, a slider, a
-toggle between two modes). Its purpose is understanding: "see both
-sides with your own hands".
+A reader-operable experiment: the reader changes a judgment condition
+(a threshold, a caliber, a parameter) and the visualization responds
+instantly. Its purpose is discovery — "move the line yourself and
+watch what crosses it". The control can take any shape: a slider, a
+dial, a pick, a drag, a time cursor, a caliber switch. The form is
+free; the contract is not.
 
-- **Use only when the content's core IS a comparison** (two strategies,
-  two decoding schemes, old vs new pipeline). If the page's argument
-  doesn't hinge on contrast, don't add it.
-- Must serve the explanation: each side gets the same honest encoding,
-  the same caption duty, the same source line. It is two charts sharing
-  one frame, not a toy.
-- Degrades under `prefers-reduced-motion` to a static both-sides view.
-- The author records the reason in runtime notes (this is the one
-  interaction that exists only because the content demanded it).
+- **The reader's action must change the judgment, not just the view.**
+  Switching between two static columns is a weak experiment. Changing
+  a condition (threshold, caliber, parameter) and watching the state
+  re-judge is the real thing — a live count and a dynamic conclusion
+  line that re-state the current state prove the change is real. If no
+  condition changes, it is a toggle, not an experiment.
+- Use only when the content invites it: a comparison, a ranking, a
+  threshold question. If the argument does not hinge on a condition,
+  do not add it.
+- Honest encoding on every state: same data, same caliber labels, same
+  caption duty. The live count / dynamic conclusion must never assert
+  more than the data says.
+- Degrades under `prefers-reduced-motion` to a static view of the
+  default condition.
+- The author records the reason in runtime notes. (Validated form:
+  runtime/2026-08-16-gdp-lab — caliber switch + threshold slider over
+  11 industry growth rates.)
 
 ## Motion (the only two effects)
 

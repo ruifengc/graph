@@ -1,8 +1,10 @@
 # Interactions
 
-Two interactions are the default; a third is author-optional for
-content that invites reader manipulation. Anything beyond needs a
-stated reason and a runtime note.
+Interactions carry information. The reader's action either surfaces
+data (hover-to-read), changes the reading context (theme toggle), or
+re-judges the state (an experiment). The forbidden kind is the
+show-off — an interaction that exists only to impress. New
+interactions need a stated reason and a runtime note.
 
 ## 1. Hover-to-read
 
@@ -50,7 +52,7 @@ Purpose: day/night reading. A pill toggle in the page corner.
 - Charts must be readable in both themes: SVG elements use `var(--...)`
   tokens, never hardcoded colors.
 
-## 3. Interactive experiment (author-optional)
+## 3. Interactive experiment
 
 A reader-operable experiment: the reader changes a judgment condition
 (a threshold, a caliber, a parameter) and the visualization responds

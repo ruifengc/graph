@@ -36,11 +36,17 @@ CSS, JS, SVG, and data all inline into one HTML via `scripts/build.py`.
 our own assets are fully under our control so inlining costs nothing.
 External resources allowed if declared. *Status:* in use.
 
-### D6. Two interactions, two motion effects — nothing more
-Hover-to-read and theme toggle; draw-in and count-up. *Reason:* motion
-that needs new layout to exist doesn't deserve to exist; interaction
-count is part of the visual identity (restraint = the aesthetic).
-*Status:* in use.
+### D6. Interactions and motion carry information (revised 2026-08)
+Hover-to-read and theme toggle; draw-in and count-up; plus
+reader-operable experiments when the content invites them. The
+original decision capped interaction COUNT as part of the visual
+identity; the user corrected this — the constraint is INFORMATION, not
+quantity. What is forbidden: show-off interactions and effects that
+exist only to impress (a particle field, a title that scatters into
+particles) — they carry no data and interrupt reading. What is
+encouraged: any interaction that surfaces data, changes the reading
+context, or re-judges the state. Motion that needs new layout to exist
+doesn't deserve to exist. *Status:* in use (as revised).
 
 ### D7. Log scale only when the range demands it, declared in caption
 A series spanning 307 → 10843 (35×) cannot be read linearly; log scale

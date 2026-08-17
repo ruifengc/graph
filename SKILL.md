@@ -28,7 +28,7 @@ within those bounds:
 
 - **Determined by the skill**: tokens (colors/type/spacing/motion),
   narrative structure (kicker → title → sub → key numbers → charts →
-  sources), honesty rules, the two interactions, technical pitfalls
+  sources), honesty rules, the interaction rules, technical pitfalls
   learned from real runs.
 - **Free for the author**: how a chart is laid out, how events are
   expressed, what visual metaphor carries a comparison, how much
@@ -66,12 +66,15 @@ One self-contained `output.html`:
   no framework. All generated assets (CSS, JS, SVG, data) are inlined into
   the single file; external resources (e.g. font CDN) are allowed only when
   explicitly declared and justified.
-- **Two interactions only**: hover-to-read (exact value + date at the
-  nearest data point) and theme toggle. Nothing else gets invented without
-  a reason.
-- **Motion, minimal**: draw-in and count-up only, played once, with
-  `prefers-reduced-motion` honored. Motion serves understanding; it never
-  loops and never decorates.
+- **Interactions carry information**: hover-to-read (exact value + date
+  at the nearest data point), theme toggle, and — when the content
+  invites it — reader-operable experiments. The forbidden kind is the
+  show-off: an interaction that exists only to impress. New
+  interactions need a stated reason.
+- **Motion, minimal**: the proven set is draw-in and count-up, played
+  once, with `prefers-reduced-motion` honored. Motion serves
+  understanding; it never loops and never decorates. A new effect needs
+  the same justification as a new interaction.
 
 ## Pipeline (every run)
 
@@ -123,13 +126,15 @@ One self-contained `output.html`:
 4. **Honest encoding.** Bar length, dot count, ring angle, area size all
    map to real quantities. Log axes are declared in the caption. Rounded
    totals are footnoted, not silently fixed.
-5. **Motion and interaction stay minimal.** Two interactions by
-   default (hover-to-read, theme toggle) plus one author-optional
-   third (an interactive experiment, when the reader changing a
-   condition — threshold, caliber, parameter — reveals the point;
-   see `references/interactions.md`). Two motion effects,
-   `prefers-reduced-motion` always honored. An effect that needs a new
-   layout to exist does not deserve to exist.
+5. **Motion and interaction serve understanding.** Interactions carry
+   information: hover-to-read, theme toggle, and — when the content
+   invites it — reader-operable experiments (changing a condition —
+   threshold, caliber, parameter — re-judges the state; see
+   `references/interactions.md`). The forbidden kind is the show-off:
+   an interaction or effect that exists only to impress. Motion never
+   loops and never decorates; `prefers-reduced-motion` always honored.
+   An effect that needs a new layout to exist does not deserve to
+   exist.
 6. **One page, one argument; chart count follows the content.** The page
    serves a single core claim. Each chart carries one independent
    conclusion — a long input with rich evidence earns more charts, a short

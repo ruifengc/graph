@@ -2,7 +2,7 @@
 
 Input: a dataset / CSV / JSON / table with a story to tell (no prose).
 
-Same seven-step pipeline as `article.md` — the differences:
+Same eight-step pipeline as `article.md` — the differences:
 
 1. **Profile the data first.** Rows? columns? ranges? missing values?
    units? period covered? This is the extraction step — the story is in

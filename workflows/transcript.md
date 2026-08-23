@@ -2,7 +2,7 @@
 
 Input: a video/talk/podcast transcript (plain text or subtitle export).
 
-Same seven-step pipeline as `article.md` — the differences:
+Same eight-step pipeline as `article.md` — the differences:
 
 1. **Transcribe-first reality:** spoken content is redundant. The
    extraction step is heavier: find the argument buried in digressions,

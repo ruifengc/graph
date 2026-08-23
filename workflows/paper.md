@@ -2,7 +2,7 @@
 
 Input: an academic paper / arXiv PDF / lecture notes.
 
-Same seven-step pipeline as `article.md` — the differences:
+Same eight-step pipeline as `article.md` — the differences:
 
 1. **Read with the abstract + figures first.** Papers are dense; read
    abstract, skim figures/captions, then the method/results sections.

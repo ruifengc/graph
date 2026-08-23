@@ -24,13 +24,13 @@ graph 是 Agent Skills 风格的 skill——`SKILL.md` 是入口。把它装进�
 把这篇论文做成 HTML 讲解页：<arxiv 链接或 PDF 文本>
 ```
 
-agent 读取 `SKILL.md`，按七步流水线执行：理解 → 提炼 → 叙事 → 选图元 → 组装 → 构建+验证 → 留档。
+agent 读取 `SKILL.md`，按八步流水线执行：理解 → 提炼 → 叙事 → 选图元 → 组装 → 构建+验证 → 留档 → 可选局域网分享。
 
 ## 仓库结构
 
 ```
 SKILL.md          入口：流水线、规则、分工
-scripts/          build.py（多文件 → 单 HTML）、validate.py（自检）
+scripts/          build.py（多文件 → 单 HTML）、validate.py（自检）、serve.py（局域网分享已构建页面）
 references/       设计 token、叙事结构、交互、图元库
 workflows/        按输入类型的处理流（文章 / 论文 / 数据 / 新闻 / 文字稿）
 ```

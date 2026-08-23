@@ -38,15 +38,16 @@ Visualize this data: <dataset>
 Explain this paper as an HTML page: <arxiv link or PDF text>
 ```
 
-The agent reads `SKILL.md` and follows the seven-step pipeline:
+The agent reads `SKILL.md` and follows the eight-step pipeline:
 understand → extract → narrative → glyph selection → assembly →
-build+validate → archive.
+build+validate → archive → optional LAN sharing.
 
 ## Repository layout
 
 ```
 SKILL.md          entry point: pipeline, rules, division of labor
-scripts/          build.py (multi-file → single HTML), validate.py (self-check)
+scripts/          build.py (multi-file → single HTML), validate.py (self-check),
+                  serve.py (LAN sharing of a built page)
 references/       design tokens, narrative structure, interactions, glyph library
 workflows/        per-input-type processing flows (article / paper / data / news / transcript)
 ```

@@ -109,6 +109,13 @@ One self-contained `output.html`:
    origin), `output.html` (the artifact), and `notes.md` (which workflow
    was used, what didn't fit, what was improvised) under
    `runtime/YYYY-MM-DD-<topic>/`. No archive, no completion.
+8. **Offer LAN sharing.** After archiving, ask the user whether they
+   want to view the page from another machine. If yes, start
+   `python3 scripts/serve.py runtime/YYYY-MM-DD-<topic>/output.html`
+   in the background and hand over the printed LAN URL(s). Keep it
+   running until the user says they're done, then stop the process.
+   The server binds 0.0.0.0 unauthenticated — fine on a trusted LAN
+   for a self-contained static page; say so when handing over the URL.
 
 ## Non-negotiable rules
 
@@ -144,7 +151,8 @@ One self-contained `output.html`:
 
 ```
 SKILL.md          this file — entry point
-scripts/          build.py (multi-file → single HTML), validate.py (self-check)
+scripts/          build.py (multi-file → single HTML), validate.py (self-check),
+                  serve.py (LAN sharing of a built page)
 references/       knowledge base: tokens, narrative, interactions, charts/
 workflows/        per-input-type processing flows (accumulate over time)
 runtime/          run archive: input / output / notes per run (local only)

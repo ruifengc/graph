@@ -3,7 +3,7 @@
 Input: a digest / batch of related news items (e.g. collected from RSS
 feeds on one topic).
 
-Same seven-step pipeline as `article.md` — the differences:
+Same eight-step pipeline as `article.md` — the differences:
 
 1. **Cluster the items.** Read all items, group them into 2–5 story
    lines (who did what, what changed). The page is about the *situation

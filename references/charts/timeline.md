@@ -31,6 +31,20 @@ detail. This is how a "history of X" page holds a whole field.
 - Pivotal events may get a marker on the rail even before they are
   reached; no decoration beyond that.
 
+## Vertical step form — short spans (5–15 events)
+
+When the span is short and the events carry weight (a crisis
+unfolding, a career's turning points), the vertical spine reads
+better than the horizontal rail:
+
+- A vertical spine with event cards on the right side, top = first,
+  bottom = last (honest order, equal spacing unless the axis is
+  declared a sequence).
+- Cards carry name + short detail; the tooltip holds the full detail.
+- Adjacent short spans: when two timeline sections sit next to each
+  other in one page, alternate skeleton direction (one horizontal, one
+  vertical) so the page never repeats itself.
+
 ## Data contract
 
 - The sequence must trace to the input — every event, its order, and its
@@ -47,7 +61,7 @@ detail. This is how a "history of X" page holds a whole field.
 ## Constraints (what must never happen)
 
 - A flat row of dots pinned to the baseline with no hierarchy — user
-  feedback from run 1: "一个个小点贴在最底下" reads as structureless.
+  feedback: "一个个小点贴在最底下" reads as structureless.
   Events need a spine, labels with hierarchy (event name above, detail
   below or in tooltip), and breathing room. The timeline must read as a
   *sequence with weight*, not a dotted line.

@@ -23,6 +23,13 @@ people.
   `--accent`.
 - Caption states the unit ("one dot = one person in a hundred").
 
+## Multi-group variant (groups of counted objects)
+
+Counting comparison across groups: "5 groups × each dot is one real
+object", groups stacked as rows with generous inter-group spacing
+(grouped rows inside one field). Same contract as the single-field form — one dot = one
+real thing, unit stated in the caption, group labels on the left.
+
 ## Rules
 
 - Unit meaning in the caption, always.

@@ -51,7 +51,7 @@ measures) and a one-line note (source/period). Numbers animate with
 count-up on scroll. The most important number is the accent one.
 
 **No numbers in the input? Omit the row.** Do not force pseudo-numbers
-for the sake of the anatomy (run 1 lesson: a drama analysis has no
+for the sake of the anatomy (a drama analysis has no
 numbers — the row simply disappears, and the page goes straight from
 sub-line to sections).
 
@@ -75,7 +75,7 @@ blocks. When assembling:
   kicker style (11px, uppercase, letter-spaced, muted), e.g.
   `01 · 时间线` or `二 · 关系`. The eyebrow makes the section hierarchy
   readable at a glance; a hairline alone does not separate sections
-  (user feedback from run 2).
+  (user feedback).
 
 ### Long-page enhancements (optional, pages with >6 sections)
 
@@ -104,7 +104,7 @@ chronicle) earn three structural aids:
   section *really* need this skeleton, or was it the path of least
   resistance? If a different shape fits equally well (a lane diagram
   instead of a branch tree, a mirror instead of arrows), use it —
-  variety is the byproduct of honest fit, not a target. (Run 5: three
+  variety is the byproduct of honest fit, not a target. (Three
   of four sections were arrow-connection maps.)
 
 ### 5. Chart blocks

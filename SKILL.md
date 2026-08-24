@@ -23,8 +23,9 @@ adds the punchlines, interaction serves readers who want to dig in.
 ## Division of labor: style is law, execution is free
 
 Graph sets the **style, the information, and the constraints** — never
-the specific drawing. The author (an LLM) has full creative freedom
-within those bounds:
+the specific drawing. The author — the LLM executing this skill — is
+a creator, not an assembler, with full creative freedom within those
+bounds:
 
 - **Determined by the skill**: tokens (colors/type/spacing/motion),
   narrative structure (kicker → title → sub → key numbers → charts →
@@ -34,102 +35,85 @@ within those bounds:
   expressed, what visual metaphor carries a comparison, how much
   decoration a section earns. Hand-written SVG is the medium; the
   composition is the author's.
+- **The glyph library is a reference, never a menu, never a cap on
+  expression.** Whenever the content calls for a structure the library
+  does not offer, invent it: a new chart, a diagram, a metaphor, a
+  whole new visual structure. Building a new structure is the
+  expected path, not the exception — the library exists to learn
+  from, and inventing extends it. The skill constrains only what it
+  declares (tokens, narrative, honesty, motion/interaction rules);
+  everything else is the author's to create. New expressions grow the
+  library, not the other way around.
 - The glyph docs in `references/charts/` state *when to use, what the
   data contract is, what must not happen* — they do not prescribe
   coordinates or a single correct drawing. Learn from their pitfalls,
   don't copy their geometry.
 
-## What comes in
-
-| Input | Typical source |
-|---|---|
-| Article / essay | blog post, long-read, analysis piece |
-| Research report / survey | industry report, survey results, whitepaper |
-| Academic paper | arXiv paper, PDF, lecture notes |
-| News digest | a batch of related news items |
-| Video transcript | transcript of a talk / video |
-| Dataset | CSV / JSON / table with a story to tell |
-
-All inputs are normalized to **text + optional data** before anything else
-happens. Graph never consumes video or PDF binaries directly.
-
 ## What goes out
 
-One self-contained `output.html`:
+One self-contained `output.html`: hand-written SVG charts, day/night
+themes (toggle in the corner), hover-to-read on every chart, and all
+generated assets inlined. Explainer structure, interactions, and motion
+are specified in `references/narrative.md` and
+`references/interactions.md`; colors and type are locked in
+`references/tokens.md` (the only allowed color source).
 
-- **Explainer structure** (top to bottom): kicker → conclusion title →
-  sub-line → key numbers → chart blocks (title + caption + SVG + takeaway)
-  → source line. Full spec in `references/narrative.md`.
-- **Day/night themes**, toggle in the corner. Tokens locked in
-  `references/tokens.md` — the only allowed color source.
-- **Hand-written SVG charts** from `references/charts/` — no chart library,
-  no framework. All generated assets (CSS, JS, SVG, data) are inlined into
-  the single file; external resources (e.g. font CDN) are allowed only when
-  explicitly declared and justified.
-- **Interactions carry information**: hover-to-read (exact value + date
-  at the nearest data point), theme toggle, and — when the content
-  invites it — reader-operable experiments. The forbidden kind is the
-  show-off: an interaction that exists only to impress. New
-  interactions need a stated reason.
-- **Motion, minimal**: the proven set is draw-in and count-up, played
-  once, with `prefers-reduced-motion` honored. Motion serves
-  understanding; it never loops and never decorates. A new effect needs
-  the same justification as a new interaction.
+## Pipeline (five stages — load only what each stage needs)
 
-## Pipeline (every run)
+Read files ON DEMAND: each stage names the files it requires; do not
+pre-load the rest. Loading everything up front wastes context and
+dilutes attention. **Never read `runtime/` or `examples/` while
+generating** — prior pages are not style references; composing fresh
+every time is what keeps the output varied (rule 7).
 
-1. **Understand the input.** Read the whole input. Extract: the core
-   argument (1–3 sentences), the evidence (what actually supports it), the
-   data shapes (series / ranking / share / relation / timeline / ...), and
-   every source. Never skip this step — a page built from skimming is a
-   page that lies.
-2. **Pick the workflow.** Match the input type against `workflows/`
-   (article / paper / data / news / transcript). Follow its steps — matched
-   or not, every run is archived in step 7; the notes record which workflow
-   was used and where it fell short. If no workflow fits, follow the closest
-   one and **record the gap** — new workflows grow from real gaps, not from
-   imagining.
-3. **Decide the narrative.** Write the kicker, conclusion title (a
-   judgment, not a topic), sub-line, 2–4 key numbers, and one takeaway per
-   chart. Rules in `references/narrative.md`.
-4. **Select glyphs.** Map each data shape to a glyph in
-   `references/charts/` (line / bars / dots / ring / timeline). If no glyph
-   fits, hand-write SVG following the closest glyph's conventions and note
-   the new shape in runtime notes — new glyphs grow the same way.
-5. **Assemble the page.** Build from the tokens and narrative spec.
-   Charts encode data faithfully: log scale only when the range demands it
-   (state it in the caption), area encodes with sqrt, never fake a unit.
-6. **Build & validate.** Run `scripts/build.py` to produce the single
-   file, then `scripts/validate.py` and fix every finding. Light DOM
-   check: browser console clean + theme toggle flips both themes. That
-   is the whole review — no screenshots, no scroll-through verification,
-   no per-element confirmation, no pixel work. Report
-   `dom_review: passed`.
-7. **Archive to runtime.** Save `input.md` (the source material + its
-   origin), `output.html` (the artifact), and `notes.md` (which workflow
-   was used, what didn't fit, what was improvised) under
-   `runtime/YYYY-MM-DD-<topic>/`. No archive, no completion.
-8. **Offer LAN sharing.** After archiving, ask the user whether they
-   want to view the page from another machine. If yes, start
-   `python3 scripts/serve.py runtime/YYYY-MM-DD-<topic>/output.html`
-   in the background and hand over the printed LAN URL(s). Keep it
-   running until the user says they're done, then stop the process.
-   The server binds 0.0.0.0 unauthenticated — fine on a trusted LAN
-   for a self-contained static page; say so when handing over the URL.
+1. **Understand & route.** Read the whole input. Extract the core
+   claim (1–3 sentences), the evidence, the data shapes, and every
+   source — rules in `workflows/base.md`. Pick the matching workflow
+   card (`workflows/` — paper / data / transcript / news; articles run
+   base directly). A page built from skimming is a page that lies.
+   *Load: the matched workflow card(s) — base + one derived, or base
+   alone.*
+2. **Design the narrative.** Write the kicker, conclusion title (a
+   judgment, not a topic), sub-line, 2–4 key numbers, and one takeaway
+   per chart. *Load: `references/narrative.md`.*
+3. **Select glyphs.** Map each data shape through the decision table;
+   if no glyph fits, hand-write following the closest glyph's
+   conventions and note the new shape in runtime notes — new glyphs
+   grow the same way (decisions.md D8). *Load: `charts/README.md` +
+   only the glyph docs the content needs.*
+4. **Assemble.** Build from the tokens and the narrative spec. Charts
+   encode data faithfully: log scale only when the range demands it
+   (state it in the caption), area encodes with sqrt, never fake a
+   unit. *Load: `references/tokens.md`.*
+5. **Build, validate, archive.** `python3 scripts/build.py page.html
+   output.html`, then `python3 scripts/validate.py output.html` — the
+   script is the availability floor (structure, themes, hover,
+   motion-trigger mechanics, geometry bounds); fix every FAIL. One
+   fast browser pass: console clean + theme toggle flips both themes.
+   That is the whole review — no screenshots, no scroll-through, no
+   per-element confirmation, no pixel work. Spend the saved time on
+   composition, not inspection. Archive `input.md` + `output.html` +
+   `notes.md` (which workflow, what didn't fit, what was improvised)
+   under `runtime/YYYY-MM-DD-<topic>/`. No archive, no completion.
+   Then ask whether the page will be viewed from another machine; if
+   yes, serve it with `python3 scripts/serve.py <output.html>` and
+   hand over the LAN URL(s), stopping the server when the user is
+   done.
 
 ## Non-negotiable rules
 
-1. **No fabricated data.** Every number on the page traces to the input or
-   a cited source. Estimates and placeholders are allowed only when marked
-   as such in the caption. A chart without a source line is unfinished.
-2. **Tokens are law.** Colors, type stack, spacing, motion parameters come
-   from `references/tokens.md`. No new colors, no gradients unless tokens
-   say so. The accent color is chosen by the author for the content, never
-   exposed as a user-facing control.
+1. **No fabricated data.** Every number on the page traces to the input
+   or a cited source. Estimates and placeholders are allowed only when
+   marked as such in the caption. A chart without a source line is
+   unfinished.
+2. **Tokens are law.** Colors, type stack, spacing, motion parameters
+   come from `references/tokens.md`. No new colors, no gradients unless
+   tokens say so. The accent color is chosen by the author for the
+   content, never exposed as a user-facing control.
 3. **Self-contained for what we make.** All generated assets (CSS, JS,
    SVG, data) are inlined into the single HTML. External resources (web
-   fonts, CDNs) are allowed only when declared and justified; the default
-   token stack stays on system fonts.
+   fonts, CDNs) are allowed only when declared and justified; the
+   default token stack stays on system fonts.
 4. **Honest encoding.** Bar length, dot count, ring angle, area size all
    map to real quantities. Log axes are declared in the caption. Rounded
    totals are footnoted, not silently fixed.
@@ -144,37 +128,55 @@ One self-contained `output.html`:
    exist.
 6. **One page, one argument; chart count follows the content.** The page
    serves a single core claim. Each chart carries one independent
-   conclusion — a long input with rich evidence earns more charts, a short
-   input earns fewer; two charts saying the same thing collapse into one.
+   conclusion — a long input with rich evidence earns more charts, a
+   short input earns fewer; two charts saying the same thing collapse
+   into one.
+7. **Never read `runtime/` or `examples/` while generating.** Prior
+   pages are not style references; reading them fixes the style and
+   makes pages converge. The composition is fresh every run — input
+   material comes only from the source, style comes only from this
+   skill.
 
 ## Repository map
 
 ```
-SKILL.md          this file — entry point
-scripts/          build.py (multi-file → single HTML), validate.py (self-check),
-                  serve.py (LAN sharing of a built page)
-references/       knowledge base: tokens, narrative, interactions, charts/
-workflows/        per-input-type processing flows (accumulate over time)
+SKILL.md          this file — entry point (constitution + routing)
+scripts/          build.py (multi-file → single HTML), validate.py
+                  (mechanical availability floor), serve.py (LAN sharing)
+references/       knowledge base: tokens, narrative, interactions,
+                  charts/, data-cross-check.md
+workflows/        input-type cards: base + derived (paper/data/
+                  transcript/news), each declaring only its differences
 runtime/          run archive: input / output / notes per run (local only)
 examples/         curated exemplars promoted from runtime (local only)
 ```
 
-`runtime/` and `examples/` are excluded from the public repo — they exist
-to evolve the skill: workflows grow from runtime notes, exemplars become
-regression baselines when tokens or glyphs change.
+`runtime/` and `examples/` are excluded from the public repo — they
+exist to evolve the skill, never to be read during generation (rule 7).
 
 ## References
 
 - `references/tokens.md` — day/night theme tokens (the only color source)
 - `references/narrative.md` — explainer structure and writing rules
-- `references/interactions.md` — hover-to-read and theme toggle patterns
-- `references/charts/` — glyph library: line, bars, dots, ring, timeline
-- `references/decisions.md` — why the design is what it is
+- `references/interactions.md` — hover, theme toggle, experiments, motion
+- `references/charts/` — glyph library: line, bars, dots, ring, timeline,
+  relations, contrast, scatter, scoreboard, threshold, lanes
+- `references/data-cross-check.md` — verify inlined numbers against the
+  source before archiving
+- `references/decisions.md` — design rationale archive; **maintainer
+  reading only, never loaded during generation**
 
-## Workflows
+## Workflows (routing)
 
-- `workflows/article.md` — article / long-read → page
-- `workflows/paper.md` — academic paper → page
-- `workflows/data.md` — dataset / CSV → page
-- `workflows/news.md` — news digest → page
-- `workflows/transcript.md` — video transcript → page
+| Input | Card |
+|---|---|
+| Article / long-read / analysis | none — run `base.md` directly |
+| Academic paper | `paper.md` (inherits base) |
+| Dataset / CSV / table / official statistics | `data.md` (inherits base) |
+| Video / talk transcript | `transcript.md` (inherits base) |
+| News digest / batch | `news.md` (inherits base) |
+
+Each derived card declares only what is special: recognition, special
+processing steps, special glyph tendencies, special honesty discipline,
+recorded gaps. If a family grows far enough apart, split a second base
+card (change the `Inherits:` line in the affected cards).

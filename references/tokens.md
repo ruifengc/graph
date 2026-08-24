@@ -1,7 +1,7 @@
 # Design Tokens
 
 The single source of truth for graph's visual language. Values below are
-fixed by the style lab iteration (2026-08); do not invent new colors,
+fixed by the style lab iteration; do not invent new colors,
 fonts, or motion parameters. Every page is assembled from these tokens.
 
 ## Theme system

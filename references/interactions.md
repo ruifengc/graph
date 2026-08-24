@@ -30,7 +30,6 @@ mousemove over the chart → map px to the nearest event index (fixed hit
 areas or nearest-index search) → accent dot on the event + tooltip with
 **event name + full detail**. Short labels live on the chart; the
 tooltip carries the detail. Same tooltip styling and edge-flip rules.
-(Learned from transcript run 1.)
 
 ### Node hover (variant for relation maps)
 
@@ -38,7 +37,7 @@ For relation maps, hover targets are the **nodes** (2D nearest-point
 search over node positions), not the edges: hovering a node highlights
 it and shows its full relation detail in the tooltip. This is what
 keeps edge labels short on the chart while detail stays reachable
-(validated in run 5, paired with the relations.md label hygiene rule).
+(paired with the relations.md label hygiene rule).
 
 ## 2. Theme toggle
 
@@ -76,18 +75,25 @@ free; the contract is not.
 - Degrades under `prefers-reduced-motion` to a static view of the
   default condition.
 - The author records the reason in runtime notes. (Validated form:
-  runtime/2026-08-16-gdp-lab — caliber switch + threshold slider over
-  11 industry growth rates.)
+  a caliber switch + threshold slider over 11 industry growth rates.)
 
-## Motion (the only two effects)
+## Motion
 
-| Effect | Trigger | Params |
-|---|---|---|
-| Draw-in | chart enters viewport | 2.4s, `cubic-bezier(.4,0,.15,1)`, once |
-| Count-up | numbers enter viewport | 900ms, cubic-out, once |
+The only two motion effects are draw-in and count-up (parameters, plus
+the theme-switch and tooltip transitions, live in `references/tokens.md`
+Motion). Both play once, on enter-viewport, via IntersectionObserver
+(threshold ~0.15), disconnect after firing. Both disabled under
+`prefers-reduced-motion`:
 
-Both via IntersectionObserver (threshold ~0.15), disconnect after firing.
-Both disabled under `prefers-reduced-motion`:
+**IO trigger propagation (real bug — labels-only charts).** The
+observer adds `.on` only to the element it observes. Animated elements
+are usually SVG children (`rect.grow`, `circle.fade-in`): either watch
+every animated element, or drive them with a container rule
+(`.chart.on .grow { transform: scaleX(1) }`, `.chart.on .fade-in {
+animation-play-state: running }`). Watching only the holder leaves
+every child at its initial hidden state (opacity 0 / scaleX(.001)) —
+the chart renders as labels and axes only. DOM review must check
+computed `transform`/`opacity` after scroll, never element counts.
 
 ```css
 @media (prefers-reduced-motion:reduce){
@@ -99,7 +105,8 @@ and a JS guard before starting count-up / draw-in.
 
 ## Contract checklist (validate.py also checks the static parts)
 
-- [ ] Every chart has a hover layer and tooltip (continuous charts)
+- [ ] Every chart has a hover layer and tooltip — bars, rings, and
+      multi-panel charts included, not only continuous series
 - [ ] Tooltip values match the nearest real data point
 - [ ] Theme toggle present and both themes readable
 - [ ] No looping or decorative animation

@@ -1,7 +1,7 @@
 # Expression · Relations
 
 Directed relationship map — who curries favor with whom, who hates
-whom, who protects whom. **Validated in transcript run 1**; keep the
+whom, who protects whom. Keep the
 conventions that worked.
 
 ## When to use
@@ -9,7 +9,7 @@ conventions that worked.
 Inputs whose spine is a web of people/entities and their attitudes:
 drama recaps, political/company power maps, ecosystem analyses.
 
-## Proven form (validated in run 1)
+## Proven form
 
 - Nodes = people/entities; edges = directed relations.
 - **Line semantics carry meaning**: solid = one kind of relation,
@@ -18,7 +18,7 @@ drama recaps, political/company power maps, ecosystem analyses.
   phrase.
 - The protagonist's relations on `--accent`; the rest on the ladder.
 - Arrowheads as SVG `<marker>` with `fill:var(--...)` so they follow the
-  theme (validated in run 5; hand-drawn polygons don't re-theme).
+  theme (hand-drawn polygons don't re-theme).
 
 ## Data contract
 
@@ -33,7 +33,7 @@ drama recaps, political/company power maps, ecosystem analyses.
 - **Edge labels stay short.** A relation label is ≤ ~10 chars on the
   chart ("A→B · 关系动词短语"); anything longer goes into the tooltip.
   Long labels stacked between nodes read as text dumped on the diagram
-  (run 4 feedback).
+  (user feedback).
 - **Don't let edges of one node fan into a label pile.** When a node has
   many relations (e.g. one person connecting to everyone), stagger the
   labels, route edges through separate corridors, or keep only the

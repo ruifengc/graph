@@ -21,6 +21,9 @@ segment. Ranking energy. For >12 categories consider dots or a table.
 
 ## Rules
 
+- Signed values (positive/negative): follow the zero-line rules in
+  `charts/README.md` (signed-value section) — zero is the baseline,
+  bars grow from zero toward the value end, labels at the tail.
 - One conclusion per chart: the ranked order / the gap / the winner.
   Title says which ("Where we gained, where we bled").
 - Count-up the value labels on enter (900ms, once).

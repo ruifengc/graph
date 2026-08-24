@@ -53,3 +53,13 @@ never an interpolation.
 4. **Annotation floated off the line** — true peak (10843.6) wasn't in
    the sampled series, so its dot sat above the line. Fix: insert the
    true peak/trough into the data.
+5. **Year ticks at year-CENTER push the last label out** — with
+   quarterly data ending mid-year, ticks placed at year-center
+   (`year + 0.375`) put the final 1–2 year labels beyond the data's
+   right edge (outside the viewBox). Fix: place periodic-series year
+   ticks at year-START (`year + 0.0`), every tick stays inside.
+6. **End-of-series annotation collides with the previous point** — a
+   label anchored above the final point lands on the second-to-last
+   point's line/dot. Fix: anchor final labels below/outside the final
+   point (or end-anchored to its left), and check the label's y
+   against the neighboring point's y.

@@ -115,6 +115,24 @@ asserts: deterministic bytes (two runs → identical), no leftover
 placeholders, all hover points inside their viewBox, no hardcoded SVG
 colors, key numbers present.
 
+## Ascending sequences: stairs, not dots
+
+When the sequence is a CLIMB — grades, similarity ladders, escalation,
+any "increasing X" progression (novice → journeyman → master; a
+fidelity ladder from crude to lifelike) — draw it as STAIRS, not as a
+row of dots:
+
+- Each step is a rect; **step height encodes the progression amount**.
+  The climb is visible geometry, not a caption word (writing
+  "递增" next to a flat dot row carries no information).
+- Qualitative steps (no measured values) may use even or illustrative
+  heights, but the caption says so ("台阶高度为定性示意，非实测数值").
+- The critical point (a threshold where the relationship flips) gets
+  a marker at its step; the terminus (the boundary the climb erases)
+  is the top step's payoff — the climb's end IS the claim.
+- Stairs vs bars: bars compare magnitudes, stairs narrate a climb.
+  Stairs vs timeline: the axis is progression, not time.
+
 ## Tooltip content escapes markup
 
 Tooltip innerHTML parses `<think>` / `<|DSML|>` as unknown elements

@@ -79,8 +79,12 @@ every time is what keeps the output varied (rule 7).
 3. **Select glyphs.** Map each data shape through the decision table;
    if no glyph fits, hand-write following the closest glyph's
    conventions and note the new shape in runtime notes — new glyphs
-   grow the same way (decisions.md D8). *Load: `charts/README.md` +
-   only the glyph docs the content needs.*
+   grow the same way (decisions.md D8). For every planned chart,
+   state its claim and the visual structure that carries it (nodes,
+   paths, annotations); an angle too thin to support more than a line
+   and a few labels merges into a richer chart instead of spawning
+   one. *Load: `charts/README.md` + only the glyph docs the content
+   needs.*
 4. **Assemble.** Build from the tokens and the narrative spec. Charts
    encode data faithfully: log scale only when the range demands it
    (state it in the caption), area encodes with sqrt, never fake a
@@ -129,8 +133,10 @@ every time is what keeps the output varied (rule 7).
 6. **One page, one argument; chart count follows the content.** The page
    serves a single core claim. Each chart carries one independent
    conclusion — a long input with rich evidence earns more charts, a
-   short input earns fewer; two charts saying the same thing collapse
-   into one.
+   short input earns fewer. The constraint is ANGLE, not count: the
+   same data viewed from different angles may each earn its own chart;
+   the same angle drawn twice collapses into one (see
+   `references/narrative.md` "Charts per section").
 7. **Never read `runtime/` or `examples/` while generating.** Prior
    pages are not style references; reading them fixes the style and
    makes pages converge. The composition is fresh every run — input

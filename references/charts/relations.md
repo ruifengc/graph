@@ -20,6 +20,25 @@ drama recaps, political/company power maps, ecosystem analyses.
 - Arrowheads as SVG `<marker>` with `fill:var(--...)` so they follow the
   theme (hand-drawn polygons don't re-theme).
 
+## Mirror / branch compositions (two-way corroboration)
+
+When the argument is "the same fact, corroborated from two sides" —
+A's predicament and B's confirmation pointing at one conclusion —
+express it as a SPATIAL composition, not a numbered sequence:
+
+- A central hub naming the shared fact; two branches fan out left and
+  right, each a short vertical chain (who + what they establish);
+  the branches converge at a bottom junction carrying the conclusion.
+- **The symmetry is the argument**: two independent directions landing
+  on the same point reads as corroboration. A numbered list (① ② ③)
+  flattens that into a timeline and loses the "two-way" claim.
+- Numbered sequences are for temporal order / causal chains; mirrored
+  branches are for corroboration / opposition. Choose by the claim,
+  not by habit.
+- Same visual grammar for opposition: two columns facing a shared
+  axis (see contrast.md) when the sides are parallel paths, branches
+  when they converge.
+
 ## Data contract
 
 - Every node and edge traces to the input — nothing invented. If the

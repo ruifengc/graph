@@ -2,7 +2,8 @@
 
 Interactions carry information. The reader's action either surfaces
 data (hover-to-read), changes the reading context (theme toggle), or
-re-judges the state (an experiment). The forbidden kind is the
+re-judges the state (an experiment) — or focuses the comparison (a
+focus toggle). The forbidden kind is the
 show-off — an interaction that exists only to impress. New
 interactions need a stated reason and a runtime note.
 
@@ -76,6 +77,32 @@ free; the contract is not.
   default condition.
 - The author records the reason in runtime notes. (Validated form:
   a caliber switch + threshold slider over 11 industry growth rates.)
+
+## 4. Focus toggle (comparison focus)
+
+A reader-operable focus switch over a BOTH-SIDES comparison frame: two
+segmented buttons, one per side; the reader can isolate either side, and
+clicking the active button again restores both. The toggle is a reading
+aid layered on the contrast frame (`charts/contrast.md`) — no condition
+changes, so it is NOT an experiment (§3); and it never replaces the
+default both-sides view (the comparison must read at a glance).
+
+- **Both columns live in ONE viewBox with disjoint x-ranges** (e.g.
+  left col x 40–388, right col x 388–728). Hiding one column then never
+  repositions the other — no layout jitter, no overlap, no swap code.
+  Default state = both columns visible.
+- Control: segmented pill buttons (theme-toggle styling), `aria-pressed`
+  synced with the state; mode classes on the svg (`mode-a` / `mode-b`)
+  `display:none` the inactive column group.
+- Clicking the ACTIVE button again restores both sides (the empty state
+  is "both", never "nothing").
+- Under `prefers-reduced-motion` the buttons are disabled and CSS forces
+  both columns visible — the static both-sides view is the fallback by
+  construction (the columns never move; only display toggles).
+- Both sides keep identical encoding duty (shared pivot, same chain
+  structure, own outcome line); one accent per chart still applies.
+- Caption states that the toggle focuses one side and that reduced
+  motion fixes the both-sides view.
 
 ## Motion
 

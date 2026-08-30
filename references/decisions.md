@@ -130,9 +130,29 @@ zero-line dot plot), `charts/scoreboard.md` (qualitative verdicts),
 threshold), contrast.md spec-table variant + plain-HTML note,
 timeline.md vertical step form, dots.md multi-group variant, line.md
 pitfalls 5–6, charts/README composite / near-zero / zero-centered-label
-notes, and `references/data-cross-check.md`. Pending user visual review
-and NOT yet consolidated: lane-matrix, icon expressions, focus-toggle.
-*Reason:* a library the author cannot
+notes, and `references/data-cross-check.md`. A second pass promoted the
+no-statistics family: `charts/icons.md` (isotype counts, direction
+flows, source metaphors, scale rulers) and `charts/conceptual.md`
+(concept curves, lineage, source-metaphor diagram, gate/flip, mirror) —
+both error-class gaps (number-less inputs had no expression family),
+each already validated by repeat runs before promotion. The
+focus-toggle interaction was re-promoted into `references/interactions.md`
+§4 after being silently lost to an overwrite (a promotion that only
+lives in ops notes is not a promotion; the reference doc is the single
+source of truth). *Reason:* a library the author cannot
 see is a library that doesn't exist — accumulation lagged the runs
 and made pages converge on the original five glyphs. *Status:* in use
 (consolidated).
+
+### D18. Semantic floor is a script, not a recipe
+Number provenance, count-up derivation declarations, and quote
+fidelity were re-implemented as throwaway scripts on almost every run
+— and the throwaways themselves produced false FAILs (a key regex
+missing suffixed keys; a case-sensitive compare). They are now one
+fixture-tested standing script, `scripts/deep_check.py`, wired into
+pipeline stage 5 alongside validate.py. New recurring checks extend
+the standing script; run-specific data assertions remain throwaway
+(per-point series values, bar totals). *Reason:* a check that must be
+remembered is a check that gets skipped under time pressure; a script
+that misfires gets debugged once, not re-debugged per run.
+*Status:* in use.

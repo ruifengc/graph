@@ -92,7 +92,10 @@ every time is what keeps the output varied (rule 7).
 5. **Build, validate, archive.** `python3 scripts/build.py page.html
    output.html`, then `python3 scripts/validate.py output.html` — the
    script is the availability floor (structure, themes, hover,
-   motion-trigger mechanics, geometry bounds); fix every FAIL. One
+   motion-trigger mechanics, geometry bounds); fix every FAIL. Then
+   `python3 scripts/deep_check.py output.html input.md` — the semantic
+   floor (every number, count-up, and quote traces to the source).
+   One
    fast browser pass: console clean + theme toggle flips both themes.
    That is the whole review — no screenshots, no scroll-through, no
    per-element confirmation, no pixel work. Spend the saved time on
@@ -148,7 +151,9 @@ every time is what keeps the output varied (rule 7).
 ```
 SKILL.md          this file — entry point (constitution + routing)
 scripts/          build.py (multi-file → single HTML), validate.py
-                  (mechanical availability floor), serve.py (LAN sharing)
+                  (mechanical availability floor), deep_check.py
+                  (semantic floor: numbers/quotes trace to source),
+                  serve.py (LAN sharing)
 references/       knowledge base: tokens, narrative, interactions,
                   charts/, data-cross-check.md
 workflows/        input-type cards: base + derived (paper/data/
@@ -166,7 +171,8 @@ exist to evolve the skill, never to be read during generation (rule 7).
 - `references/narrative.md` — explainer structure and writing rules
 - `references/interactions.md` — hover, theme toggle, experiments, motion
 - `references/charts/` — glyph library: line, bars, dots, ring, timeline,
-  relations, contrast, scatter, scoreboard, threshold, lanes
+  relations, contrast, scatter, scoreboard, threshold, lanes, icons,
+  conceptual
 - `references/data-cross-check.md` — verify inlined numbers against the
   source before archiving
 - `references/decisions.md` — design rationale archive; **maintainer

@@ -24,6 +24,8 @@ must never happen), and the pitfalls (what already broke in real runs).
 | Qualitative verdicts without scores | Scoreboard | `scoreboard.md` |
 | A single value vs a threshold | Threshold gauge | `threshold.md` |
 | Layered stacks / tracks | Lanes | `lanes.md` |
+| A claim as icon semantics / isotype counts / direction flows | Icons | `icons.md` |
+| No-statistics inputs (essays, criticism, talks) — concept curves, lineage, source metaphor, gate, mirror | Conceptual | `conceptual.md` |
 | Anything else | closest glyph + runtime note | — |
 
 ## Rules for every glyph
@@ -43,6 +45,14 @@ must never happen), and the pitfalls (what already broke in real runs).
   `references/interactions.md` — bars, rings, and multi-panel charts
   included, not only continuous series).
 - Draw-in on the main path (2.4s, once, `prefers-reduced-motion` off).
+- **Compound selectors beat component classes.** A section-scoped rule
+  like `.section p` (specificity 0,1,1) silently overrides a component
+  rule like `.takeaway` (0,1,0) — margins collapse to the section's
+  values. Real break: a takeaway under a figcaption lost its
+  `margin-top` and sat flush against the caption. Scope component
+  rules at equal-or-higher specificity (`.section .takeaway`), and
+  when a styled component sits directly after another styled element,
+  confirm its computed margins in the browser pass.
 
 ## Geometry hygiene (applies to every chart with edges/arrows)
 
@@ -62,7 +72,7 @@ must never happen), and the pitfalls (what already broke in real runs).
 
 ## Signed-value charts (positive/negative data)
 
-For data with both signs (PPI-style 涨跌), the zero line is the base:
+For data with both signs (positive/negative values), the zero line is the base:
 
 - **Zero line is the baseline** — positive bars grow up from it,
   negative bars grow down. Never render a -4.1% as a "positive" bar.

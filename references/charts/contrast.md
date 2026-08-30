@@ -36,6 +36,23 @@ axis), the table form carries it:
 - Caption states it is a spec comparison, not measured data
   ("规格对照，非实测").
 
+## Experiment variant (the fork carries the judgment)
+
+When the source itself ends in an either/or handed to the reader, the
+fork can carry the interactive experiment (interactions.md §3): two
+branch buttons switch the judgment condition ("tomorrow unchanged" vs
+"tomorrow changed"), and a verdict sentence under the fork rewrites
+live on every switch. Contract:
+
+- BOTH verdicts must be literal claims from the source — every state
+  the reader can reach is honest by construction.
+- Reduced motion disables the buttons and shows both branches.
+- The dim of the inactive branch goes on the branch GROUP, never on an
+  element that also carries `.fade-in` — an animation's forwards fill
+  overrides a declared opacity, and the dim silently never shows.
+  Group opacity multiplies the children's final state, so dim-on-group
+  + fade-in-on-children composes correctly.
+
 ## Data contract
 
 - Both columns' steps trace to the input; the shared pivot must be the

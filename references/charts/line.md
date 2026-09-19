@@ -2,12 +2,6 @@
 
 Continuous series over time. The workhorse of graph pages.
 
-## When to use
-
-A value (or a few values) measured repeatedly over time: monthly index,
-daily price, yearly revenue, cumulative count. If the input is a series
-with >20 points, line is the default.
-
 ## Data contract
 
 - Time on the x axis must be **honest and continuous**: equal distance =
@@ -33,33 +27,25 @@ with >20 points, line is the default.
 
 ## Hover-to-read (required, continuous charts)
 
-Per `references/interactions.md`: transparent capture area over the
-plot, mousemove → convert px to data coordinates → binary search the
-nearest point → accent dot + fixed tooltip (value + date, tabular
-figures, flips at viewport edges). Tooltip shows a real data point,
-never an interpolation.
+Per `references/interactions.md`: transparent capture area, mousemove →
+convert px to data coordinates → nearest point → accent dot + fixed
+tooltip (value + date). Tooltip shows a real data point, never an
+interpolation.
 
 ## Pitfalls (from real runs)
 
-1. **Trident lines** — x used integer years, collapsing the 4 samples
-   per year onto one x, drawing vertical jagged forks. Fixed with
-   fractional year x.
-2. **Top annotation clipped** — peak label above a point near the
-   viewBox top rendered outside the SVG. Fix: headroom above the top
-   annotation (top margin ~34 in a 250-high viewBox).
-3. **Hover always hit the leftmost point** — nearest-point search
-   compared pixel x against year values. Fix: convert px → data
-   coordinate first, then search.
-4. **Annotation floated off the line** — true peak (10843.6) wasn't in
-   the sampled series, so its dot sat above the line. Fix: insert the
-   true peak/trough into the data.
+1. **Trident lines** — x used integer years, collapsing samples per
+   year onto one x. Fix: fractional year x.
+2. **Top annotation clipped** — peak label above a point near the top
+   rendered outside the SVG. Fix: headroom above the top annotation.
+3. **Hover always hit the leftmost point** — the search compared pixel x
+   against year values. Fix: convert px → data coordinate first.
+4. **Annotation floated off the line** — the true peak wasn't in the
+   sampled series. Fix: insert the true peak/trough into the data.
 5. **Year ticks at year-CENTER push the last label out** — with
-   quarterly data ending mid-year, ticks placed at year-center
-   (`year + 0.375`) put the final 1–2 year labels beyond the data's
-   right edge (outside the viewBox). Fix: place periodic-series year
-   ticks at year-START (`year + 0.0`), every tick stays inside.
+   quarterly data ending mid-year, center ticks put the final years
+   beyond the data's right edge. Fix: ticks at year-START (`year + 0.0`).
 6. **End-of-series annotation collides with the previous point** — a
-   label anchored above the final point lands on the second-to-last
-   point's line/dot. Fix: anchor final labels below/outside the final
-   point (or end-anchored to its left), and check the label's y
-   against the neighboring point's y.
+   label above the final point lands on the second-to-last point. Fix:
+   anchor final labels below/outside the final point; check the label's
+   y against the neighbor's y.

@@ -17,10 +17,13 @@ the argument, short lines of text add the punchlines, and interaction
   stick. No framework, no CDN, no build step for the reader.
 - **Day/night themes** — Paper (warm gray + vermillion) and Ink
   (near-black + gold), toggle in the corner.
-- **Hand-written SVG charts** — no chart library. The visual language
-  is defined by the skill's design tokens, not by ECharts or d3.
-- **Two interactions only** — hover-to-read (exact value at the nearest
-  data point) and theme toggle. Restraint is the aesthetic.
+- **Hand-written SVG charts by default** — a zero-dependency page is the
+  easy case. The visual language is defined by the skill's design tokens
+  rather than a chart library.
+- **Interactions carry information** — when an interaction surfaces data,
+  changes the reading, or re-judges the state, it earns its place; a
+  show-off effect that exists only to impress does not. Restraint is the
+  aesthetic.
 - **Honest by construction** — every number traces to the input or a
   cited source; log axes, sampling, rounding, and assumptions are
   declared in the captions; the source line is mandatory.
@@ -38,9 +41,9 @@ Visualize this data: <dataset>
 Explain this paper as an HTML page: <arxiv link or PDF text>
 ```
 
-The agent reads `SKILL.md` and follows the eight-step pipeline:
-understand → extract → narrative → glyph selection → assembly →
-build+validate → archive → optional LAN sharing.
+The agent reads `SKILL.md` and follows the five-stage pipeline:
+understand & route → compose the narrative plan → express → assemble →
+build, validate, archive — plus optional LAN sharing.
 
 ## Repository layout
 

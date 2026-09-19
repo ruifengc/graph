@@ -18,11 +18,14 @@ in different environments; the two themes are the product's signature and
 cost nothing per-page (tokens only). Accent colors chosen by the author
 per content, never exposed to readers. *Status:* in use.
 
-### D3. Hand-written SVG, no chart library
-Glyphs are authored by hand following `charts/`, no ECharts/Chart.js/d3.
-*Reason:* full control of the visual language (the library look would
-leak through), zero dependency weight, and the skill's own glyphs become
-the brand. *Status:* in use.
+### D3. Hand-written SVG is the default, not a law
+Glyphs are authored by hand following `charts/` — the easy case and the
+default, because it keeps the visual language under the page's own
+control. It is an author's choice, not a constraint: a library or a 3D
+view is allowed when the content genuinely needs it (see the D11
+expression layer). *Reason:* full control of the visual language, zero
+dependency weight, and the skill's own glyphs become the brand — a
+preference, not a prohibition. *Status:* in use (as a default, not a law).
 
 ### D4. System font stacks by default
 Serif (Georgia / Songti) for titles, system sans for body. *Reason:*
@@ -30,11 +33,14 @@ readable everywhere, zero licensing risk for an open-source repo, no
 network needed. Webfonts allowed only when declared and justified
 (SKILL.md rule 3). *Status:* in use.
 
-### D5. Self-contained single file (our assets inlined)
-CSS, JS, SVG, and data all inline into one HTML via `scripts/build.py`.
-*Reason:* the artifact is shareable as one file (WeChat, email, USB);
-our own assets are fully under our control so inlining costs nothing.
-External resources allowed if declared. *Status:* in use.
+### D5. Single file is the default, not a law
+CSS, JS, SVG, and data inline into one HTML via `scripts/build.py` — the
+easy case and the default, because the artifact shares as one file
+(WeChat, email, USB). It is a means, not a constraint: assets may be
+split or a library pulled in when the content needs it (see the D11
+expression layer), declared and justified. *Reason:* shareability and
+control; inlining costs nothing for our own assets. *Status:* in use (as
+a default, not a law).
 
 ### D6. Interactions and motion carry information (revised)
 Hover-to-read and theme toggle; draw-in and count-up; plus
@@ -71,15 +77,22 @@ composition; exposing it turns the page into a tool. *Status:* in use.
 exemplars) are gitignored; they exist to evolve the skill. *Reason:*
 inputs may be private; and the public repo stays lean. *Status:* in use.
 
-### D11. Style is law, execution is free
-The skill determines style (tokens, narrative structure, honesty rules,
-interactions, pitfalls) and provides information + constraints — it never
-prescribes the specific drawing. The LLM author has full creative
-freedom within those bounds; hand-written SVG is the medium, composition
-is the author's. *Reason:* hand-written charts (relation
-map, contrast columns) outperform template-copied ones; as LLMs grow
-stronger, the skill's value is the style system + constraints, not a
-cookbook of drawings. *Status:* in use.
+### D11. Style is law, the author is free — in two layers
+The skill determines the style (tokens, page skeleton, honesty rules,
+interaction rules, pitfalls) — a thin, stable law. Before drawing, the
+author composes a narrative plan (the intent layer): the core claim,
+each section's argument intent, its evidence and relation to its
+neighbors, the honesty statements, the reader-operable points — in plain
+semantic language, with zero expression vocabulary (no chart type, no
+visual term, no interaction form, no coordinates). Then the author
+expresses freely (the expression layer): how a claim is drawn, the chart
+form, the visual metaphor, the interaction's control shape, and the
+technique — hand-written SVG, a library, 3D, single-file or not. The
+skill never prescribes the specific drawing. *Reason:* hand-written
+charts (relation map, contrast columns) outperform template-copied ones;
+as LLMs grow stronger, the skill's value is the style system +
+constraints, not a cookbook of drawings. Emerging form is the intended
+path, not the exception. *Status:* in use.
 
 ### D12. Page structure is part of the style
 The page must read as a structured composition: clear vertical rhythm

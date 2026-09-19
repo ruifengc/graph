@@ -1,43 +1,34 @@
 # Expression · Relations
 
-Directed relationship map — who curries favor with whom, who hates
-whom, who protects whom. Keep the
-conventions that worked.
-
-## When to use
-
-Inputs whose spine is a web of people/entities and their attitudes:
-drama recaps, political/company power maps, ecosystem analyses.
+Directed relationship map — who curries favor with whom, who hates whom,
+who protects whom.
 
 ## Proven form
 
 - Nodes = people/entities; edges = directed relations.
-- **Line semantics carry meaning**: solid = one kind of relation,
-  dashed = another. State the mapping in the caption.
+- **Line semantics carry meaning**: solid = one kind of relation, dashed
+  = another. State the mapping in the caption.
 - ≤12 nodes; node labels short, relation arrows labeled with a verb
   phrase.
 - The protagonist's relations on `--accent`; the rest on the ladder.
-- Arrowheads as SVG `<marker>` with `fill:var(--...)` so they follow the
-  theme (hand-drawn polygons don't re-theme).
+- Arrowheads as SVG `<marker>` with theme-following fill.
 
 ## Mirror / branch compositions (two-way corroboration)
 
 When the argument is "the same fact, corroborated from two sides" —
-A's predicament and B's confirmation pointing at one conclusion —
 express it as a SPATIAL composition, not a numbered sequence:
 
 - A central hub naming the shared fact; two branches fan out left and
-  right, each a short vertical chain (who + what they establish);
-  the branches converge at a bottom junction carrying the conclusion.
-- **The symmetry is the argument**: two independent directions landing
-  on the same point reads as corroboration. A numbered list (① ② ③)
-  flattens that into a timeline and loses the "two-way" claim.
+  right, each a short vertical chain; the branches converge at a bottom
+  junction carrying the conclusion.
+- **The symmetry is the argument**: two independent directions landing on
+  the same point reads as corroboration. A numbered list flattens that
+  and loses the "two-way" claim.
 - Numbered sequences are for temporal order / causal chains; mirrored
-  branches are for corroboration / opposition. Choose by the claim,
-  not by habit.
-- Same visual grammar for opposition: two columns facing a shared
-  axis (see contrast.md) when the sides are parallel paths, branches
-  when they converge.
+  branches are for corroboration / opposition. Choose by the claim.
+- Same visual grammar for opposition: two columns facing a shared axis
+  (contrast.md) when the sides are parallel paths, branches when they
+  converge.
 
 ## Data contract
 
@@ -49,15 +40,13 @@ express it as a SPATIAL composition, not a numbered sequence:
 ## Constraints
 
 - No node without a label; no edge without a direction.
-- **Edge labels stay short.** A relation label is ≤ ~10 chars on the
-  chart ("A→B · 关系动词短语"); anything longer goes into the tooltip.
-  Long labels stacked between nodes read as text dumped on the diagram
-  (user feedback).
+- **Edge labels stay short** (≤ ~10 chars on the chart); anything longer
+  goes into the tooltip. Long labels between nodes read as text dumped
+  on the diagram.
 - **Don't let edges of one node fan into a label pile.** When a node has
-  many relations (e.g. one person connecting to everyone), stagger the
-  labels, route edges through separate corridors, or keep only the
-  pivotal relations on the chart and move the rest to the tooltip or a
-  caption list.
+  many relations, stagger the labels, route edges through separate
+  corridors, or keep only the pivotal relations and move the rest to the
+  tooltip or a caption list.
 - More than ~12 nodes → split into two maps or keep only the pivotal
   relations.
 - Decoration (icons, portraits) only if it carries information.

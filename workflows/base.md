@@ -18,9 +18,11 @@ this card adds the generic extraction and honesty rules below.
   it in one sentence, you haven't understood the input yet.
 - **Evidence** — the 2–6 facts/numbers/events that actually support
   the claim, ranked by weight.
-- **Data shapes** — for each piece of evidence: series over time?
-  ranking? share? event sequence? relation? (map via
-  `references/charts/README.md` decision table)
+- **Argument intents** — for each piece of evidence, what it CLAIMS
+  (media reposts far outnumber originals; this series turned in Q2).
+  The section structure of the narrative plan is built from these
+  intents and the relations between them. Data shape / chart type is
+  NOT decided here — that is the expression stage's freedom.
 - **Sources** — every number's origin with date; the page's source
   line comes from here.
 
@@ -34,7 +36,9 @@ this card adds the generic extraction and honesty rules below.
 
 ## Generic glyph tendency
 
-None — the decision table routes. Derived cards may override.
+None — the expression stage decides freely from the narrative plan; the
+glyph docs are a reference, never a menu. Derived cards may override
+with a note.
 
 ## Recorded gaps
 

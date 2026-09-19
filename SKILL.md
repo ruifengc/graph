@@ -27,14 +27,23 @@ the specific drawing. The author — the LLM executing this skill — is
 a creator, not an assembler, with full creative freedom within those
 bounds:
 
-- **Determined by the skill**: tokens (colors/type/spacing/motion),
-  narrative structure (kicker → title → sub → key numbers → charts →
-  sources), honesty rules, the interaction rules, technical pitfalls
+- **Determined by the skill** (the style law): tokens (colors/type/
+  spacing/motion), the page skeleton (kicker → title → sub → key
+  numbers → charts → sources), the honesty rules, the interaction rules
+  (information carries; show-off forbidden), and technical pitfalls
   learned from real runs.
-- **Free for the author**: how a chart is laid out, how events are
-  expressed, what visual metaphor carries a comparison, how much
-  decoration a section earns. Hand-written SVG is the medium; the
-  composition is the author's.
+- **Planned before expression** (the intent layer): the narrative plan
+  — the page's core claim, each section's argument intent, its evidence
+  and relation to its neighbors, the honesty statements, the
+  reader-operable points. It is reasoned in plain semantic language
+  with zero expression vocabulary (no chart type, no visual term, no
+  interaction form, no coordinates).
+- **Free for the author** (the expression layer): how a claim is
+  drawn, the chart form, the visual metaphor, the interaction's control
+  shape, how much decoration a section earns — and the technique
+  (hand-written SVG, a library, 3D, single-file or not). The author
+  decides all of it; the skill constrains only what the style law
+  declares.
 - **The glyph library is a reference, never a menu, never a cap on
   expression.** Whenever the content calls for a structure the library
   does not offer, invent it: a new chart, a diagram, a metaphor, a
@@ -51,9 +60,9 @@ bounds:
 
 ## What goes out
 
-One self-contained `output.html`: hand-written SVG charts, day/night
+One `output.html` by default: hand-written SVG charts, day/night
 themes (toggle in the corner), hover-to-read on every chart, and all
-generated assets inlined. Explainer structure, interactions, and motion
+generated assets inlined — the easy case, not the only one. Explainer structure, interactions, and motion
 are specified in `references/narrative.md` and
 `references/interactions.md`; colors and type are locked in
 `references/tokens.md` (the only allowed color source).
@@ -67,25 +76,37 @@ generating** — prior pages are not style references; composing fresh
 every time is what keeps the output varied (rule 7).
 
 1. **Understand & route.** Read the whole input. Extract the core
-   claim (1–3 sentences), the evidence, the data shapes, and every
+   claim (1–3 sentences), the evidence, the argument intents, and every
    source — rules in `workflows/base.md`. Pick the matching workflow
    card (`workflows/` — paper / data / transcript / news; articles run
    base directly). A page built from skimming is a page that lies.
    *Load: the matched workflow card(s) — base + one derived, or base
    alone.*
-2. **Design the narrative.** Write the kicker, conclusion title (a
-   judgment, not a topic), sub-line, 2–4 key numbers, and one takeaway
-   per chart. *Load: `references/narrative.md`.*
-3. **Select glyphs.** Map each data shape through the decision table;
-   if no glyph fits, hand-write following the closest glyph's
-   conventions and note the new shape in runtime notes — new glyphs
-   grow the same way (decisions.md D8). For every planned chart,
-   state its claim and the visual structure that carries it (nodes,
-   paths, annotations); an angle too thin to support more than a line
-   and a few labels merges into a richer chart instead of spawning
-   one. *Load: `charts/README.md` + only the glyph docs the content
-   needs.*
-4. **Assemble.** Build from the tokens and the narrative spec. Charts
+2. **Compose the narrative plan.** Build the page's CONTENT blueprint
+   (the intent layer): the core claim, the section structure — each
+   section's argument intent, its evidence, and its relation to the
+   neighbors — the honesty statements, and any reader-operable point.
+   Write it in plain semantic language with ZERO expression vocabulary:
+   no chart type, no visual term, no interaction form, no coordinates
+   or colors. For long-form narrative pacing (hero argument-visual,
+   sticky chronicle cards, scrollytelling steps, click-through detail),
+   also load `references/narrative-mechanisms.md`.
+   *Load: `references/narrative-plan.md` + `references/narrative.md`
+   (+ `narrative-mechanisms.md` for long-form inputs).*
+3. **Express.** Turn the narrative plan into drawings. Per section,
+   decide the FORM that carries its argument intent — a chart, a
+   diagram, a metaphor, a whole new structure. The glyph docs in
+   `charts/` are a REFERENCE of proven forms, never a menu and never a
+   cap: use one when it fits, invent one when the content calls for it,
+   and note new shapes in runtime notes (decisions.md D8). The technique
+   is free — hand-written SVG, a library, 3D, single-file or not — as
+   long as the page honors its honesty and interaction contracts. For
+   every chart, state its claim and the visual structure that carries
+   it (nodes, paths, annotations); an angle too thin to support more
+   than a line and a few labels merges into a richer chart instead of
+   spawning one. *Load: `charts/README.md` + only the glyph docs the
+   content needs.*
+4. **Assemble.** Build from the tokens and the narrative plan. Charts
    encode data faithfully: log scale only when the range demands it
    (state it in the caption), area encodes with sqrt, never fake a
    unit. *Load: `references/tokens.md`.*
@@ -117,10 +138,12 @@ every time is what keeps the output varied (rule 7).
    come from `references/tokens.md`. No new colors, no gradients unless
    tokens say so. The accent color is chosen by the author for the
    content, never exposed as a user-facing control.
-3. **Self-contained for what we make.** All generated assets (CSS, JS,
-   SVG, data) are inlined into the single HTML. External resources (web
-   fonts, CDNs) are allowed only when declared and justified; the
-   default token stack stays on system fonts.
+3. **Self-contained is the default, not a law.** The proven shape is one
+   inlined HTML file (CSS, JS, SVG, data via `scripts/build.py`) — it is
+   the easy case and the default. Inlining is a means, not a constraint:
+   the author may pull in a library, a 3D view, or split assets when the
+   content genuinely needs it, as long as external resources are declared
+   and justified. The default token stack stays on system fonts.
 4. **Honest encoding.** Bar length, dot count, ring angle, area size all
    map to real quantities. Log axes are declared in the caption. Rounded
    totals are footnoted, not silently fixed.
@@ -168,7 +191,12 @@ exist to evolve the skill, never to be read during generation (rule 7).
 ## References
 
 - `references/tokens.md` — day/night theme tokens (the only color source)
+- `references/narrative-plan.md` — the intent layer: core claim, section
+  structure, honesty statements, reader-operable points — written with
+  zero expression vocabulary
 - `references/narrative.md` — explainer structure and writing rules
+- `references/narrative-mechanisms.md` — page-level devices: hero
+  argument-visual, sticky chronicle cards, scrollytelling, click detail
 - `references/interactions.md` — hover, theme toggle, experiments, motion
 - `references/charts/` — glyph library: line, bars, dots, ring, timeline,
   relations, contrast, scatter, scoreboard, threshold, lanes, icons,

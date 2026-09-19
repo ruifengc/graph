@@ -9,24 +9,15 @@ composition is the author's. What is fixed: the tokens, the data
 contract (what the chart must encode honestly), the constraints (what
 must never happen), and the pitfalls (what already broke in real runs).
 
-## Shape → glyph decision table
+## What this directory is
 
-| Data shape | Glyph | Doc |
-|---|---|---|
-| Continuous series over time (value per month/day/year) | Line | `line.md` |
-| Few categories compared / ranked (≤12) | Bars | `bars.md` |
-| Share / composition (parts of 100%) | Ring | `ring.md` |
-| Countable units (1 unit = 1 real thing) | Dots | `dots.md` |
-| Events on a timeline / sequence | Timeline | `timeline.md` |
-| People/entities and their directed relations | Relations | `relations.md` |
-| Two paths from a shared pivot, compared | Contrast | `contrast.md` |
-| Many entities × two metrics (position-encoded) | Scatter / dot plot | `scatter.md` |
-| Qualitative verdicts without scores | Scoreboard | `scoreboard.md` |
-| A single value vs a threshold | Threshold gauge | `threshold.md` |
-| Layered stacks / tracks | Lanes | `lanes.md` |
-| A claim as icon semantics / isotype counts / direction flows | Icons | `icons.md` |
-| No-statistics inputs (essays, criticism, talks) — concept curves, lineage, source metaphor, gate, mirror | Conceptual | `conceptual.md` |
-| Anything else | closest glyph + runtime note | — |
+`charts/` is not a menu of charts to pick from. It is the contract
+archive: each file records how one proven expression must be encoded
+honestly (its data contract) and what already broke (its pitfalls). The
+form is decided at expression time, from the narrative plan's argument
+intent — use a proven form when it fits, invent one when it does not
+(D11). Read a glyph file only when that expression is what you are about
+to draw.
 
 ## Rules for every glyph
 

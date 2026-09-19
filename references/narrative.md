@@ -5,6 +5,14 @@ reading: charts carry the argument, text adds punchlines, interaction
 serves readers who want to dig in. Every element below has a job; if an
 element cannot state its job, cut it.
 
+This file is the page SKELETON and writing style law — the shape every
+page takes and how its words read. *What the page argues* (the core
+claim, the per-section argument intents, the relations, the honesty
+statements) is decided earlier, in the narrative plan — see
+`references/narrative-plan.md`. That plan is the intent layer; this file
+is the structure the intent lands in. Do not re-decide the claim here;
+do shape it.
+
 All concrete style values (sizes, weights, spacing, colors) live in
 `references/tokens.md` — this file states WHAT each element is for and
 HOW to write it, never its pixels.

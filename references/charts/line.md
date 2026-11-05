@@ -1,51 +1,20 @@
-# Glyph · Line
+# Lines
 
-Continuous series over time. The workhorse of graph pages.
+Useful for measured change along an ordered, often temporal, axis.
 
-## Data contract
-
-- Time on the x axis must be **honest and continuous**: equal distance =
-  equal time. Fractional time (`year + (month-1)/12`) — see pitfall 1.
-- Log axis only when the range demands it (max/min > ~20×), and it
-  **must be declared in the figcaption** ("对数刻度").
-- The series is the accent-colored element; annotations (peak/trough/
-  milestones) in muted with small dots. One accent per chart.
-- Sampling must be declared in the caption ("每 3 个月一个点").
-- Annotations must sit on real data: if sampling missed the true
-  peak/trough, insert the true point into the series (pitfall 4).
-- Polyline only — never smooth or interpolate.
-
-## Constraints (what must never happen)
-
-- Integer-year x collapsing multiple samples onto one column (pitfall 1).
-- Labels clipped at the viewBox edge — leave headroom above the highest
-  annotation (pitfall 2).
-- Hover lookup comparing pixels against data values (pitfall 3).
-- Interpolated tooltip values — the reader gets the nearest **real**
-  point or nothing.
-- Value labels without thousands separators at ≥1000.
-
-## Hover-to-read (required, continuous charts)
-
-Per `references/interactions.md`: transparent capture area, mousemove →
-convert px to data coordinates → nearest point → accent dot + fixed
-tooltip (value + date). Tooltip shows a real data point, never an
-interpolation.
-
-## Pitfalls (from real runs)
-
-1. **Trident lines** — x used integer years, collapsing samples per
-   year onto one x. Fix: fractional year x.
-2. **Top annotation clipped** — peak label above a point near the top
-   rendered outside the SVG. Fix: headroom above the top annotation.
-3. **Hover always hit the leftmost point** — the search compared pixel x
-   against year values. Fix: convert px → data coordinate first.
-4. **Annotation floated off the line** — the true peak wasn't in the
-   sampled series. Fix: insert the true peak/trough into the data.
-5. **Year ticks at year-CENTER push the last label out** — with
-   quarterly data ending mid-year, center ticks put the final years
-   beyond the data's right edge. Fix: ticks at year-START (`year + 0.0`).
-6. **End-of-series annotation collides with the previous point** — a
-   label above the final point lands on the second-to-last point. Fix:
-   anchor final labels below/outside the final point; check the label's
-   y against the neighbor's y.
+- Equal temporal distance represents equal elapsed time. Map full dates
+  rather than integer years when several samples occur in a year.
+- Declare sampling, aggregation, and log scales. Choose scale for the
+  comparison; a particular max/min ratio does not automatically require log.
+- Distinguish observations from fitted or interpolated values. Do not
+  smooth a path in a way that implies unobserved peaks or measurements.
+- Anchor annotations to actual observations. If sampling omits a pivotal
+  extreme, include or separately identify the real point instead of
+  attaching its value to a nearby sample.
+- Keep annotations within the viewBox and away from neighboring points.
+  Mid-year series endings can put centered year ticks beyond the plot;
+  align ticks to actual dates and check the final label.
+- If offering inspection, map the pointer into data/SVG coordinates before
+  nearest-point lookup. Show the actual observation and date; identify
+  interpolation explicitly. Provide readable labels or another accessible
+  route to essential values. Hover is optional.

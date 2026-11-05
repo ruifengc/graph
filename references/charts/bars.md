@@ -1,28 +1,17 @@
-# Glyph · Bars
+# Bars
 
-Categorical comparison / ranking (≤12 categories).
+Useful for comparing magnitudes across categories.
 
-## Data contract
-
-- Bar length ∝ value — never break the axis. Extreme outlier? Let it run
-  off the plot and annotate the value (or add a zoom inset), never
-  truncate the axis.
-- Category bars on `--ink` (ladder: most important darkest); the single
-  key category on `--accent`.
-- Value labels at the bar end, tabular figures.
-
-## Rules
-
-- Signed values (positive/negative): zero is the baseline, bars grow
-  from zero toward the value end, labels at the tail (charts/README
-  signed-value section).
-- One conclusion per chart: the ranked order / the gap / the winner.
-  Title says which.
-- Count-up the value labels on enter (once).
-- No 3D, no gradient, no shadow bars.
-
-## Pitfalls
-
-- Long Chinese labels in vertical bars → overlap (go horizontal).
-- Truncated axis for outliers → dishonest (never).
-- More than ~12 categories → consider dots or a table.
+- Length represents value, usually from a visible zero baseline. For
+  signed values, extend in the appropriate direction from zero.
+- Do not hide a sign or magnitude with a misleading axis break. If an
+  outlier overwhelms the range, use a clearly labeled inset, alternate
+  encoding, or separate view that still shows the full context.
+- Keep category names and important values readable. Horizontal bars often
+  handle long labels better; a table or dot plot may handle many categories.
+- Near-zero values retain their true length rather than receiving an
+  invented minimum width. Labels can carry exact readings.
+- Place signed-value labels so they do not collide with category names.
+  If animated, bars grow from their baseline toward their actual endpoint.
+- Use emphasis consistently; neither a particular color nor count-up
+  animation is necessary.

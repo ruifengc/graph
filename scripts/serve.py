@@ -7,8 +7,8 @@ Usage:
 Serves the directory containing the page (or the directory itself) with
 Python's stdlib http.server — zero dependencies. Prints every reachable
 LAN URL. Port defaults to 8124 and walks upward when taken. Keeps
-running until interrupted; in an agent session start it with
-background=true and kill the session when the user is done viewing.
+running until interrupted; in an agent session start it as
+a managed background process and stop it when the user is done viewing.
 
 Unauthenticated by design: fine on a trusted LAN for a static page,
 not for anything sensitive.

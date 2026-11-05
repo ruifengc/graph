@@ -1,172 +1,138 @@
 #!/usr/bin/env python3
-"""Semantic deep-check for a built page against its input source.
+"""Literal number/quotation review hints, NOT semantic or provenance validation.
 
-validate.py is the availability floor (structure, themes, hover, motion,
-geometry). It cannot see TRANSCRIPTION SLIPS: a number or quote that made
-it into the page but not the source. This script is the semantic layer:
-
-  1. NUMBER PROVENANCE — every number in the page's visible text (3+ digit
-     integers, and any decimal) must appear literally in input.md.
-  2. COUNT-UP PROVENANCE — every `data-count="N"` must appear literally in
-     input.md, OR the enclosing <figure> must declare the derivation
-     (推算) in its caption. An undeclared derivation reads as fabrication.
-  3. QUOTE FIDELITY — every <blockquote>/<q> must appear verbatim in
-     input.md (whitespace-stripped, case-insensitive compare on both
-     sides; input may be sentence-case where the page capitalizes).
-
-Usage:
-    python3 scripts/deep_check.py output.html input.md [--phrases a,b]
-                                             [--ignore REGEX]
-
-Exit code 0 = PASS, 1 = FAIL (each failure printed as `FAIL: ...`).
-Throwaway per-run verify scripts remain welcome for run-specific
-assertions (per-point series values, bar totals); this script covers the
-checks that recur on EVERY run.
+Usage: python3 scripts/deep_check.py page.html input.md [--sources FILE]
+       [--phrases comma,separated] [--ignore REGEX] [--json]
+Matching cannot verify a number's subject, unit, period, or derivation.
+Includes static SVG text and data-count values; excludes scripts/styles.
+Exit 0: scan completed (hints may remain); 1: explicit --phrases missing;
+2: input/usage error. No exit code certifies factual accuracy.
 """
-
 import argparse
-import html
-import re
-import sys
+from collections import Counter
+from decimal import Decimal
+from html.parser import HTMLParser
+import json
 from pathlib import Path
+import re
+import unicodedata
+
+# Group thousands without treating a comma-separated list as one number.
+NUMBER = re.compile(r'(?<![\d.])[+−-]?(?:\d{1,3}(?:,\d{3})+|\d+)(?:\.\d+)?(?![\d.])')
 
 
-def visible_text(src: str, keep_svg: bool = True) -> str:
-    """Strip style/script/comments/tags — leave only rendered text.
+class Text(HTMLParser):
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.parts = []
+        self.counts = []
+        self.quotes = []
+        self.skip = 0
+        self.quote_stack = []
 
-    keep_svg=False additionally drops SVG internals: axis ticks, scale
-    labels, and geometry numbers there come from the same gen.py
-    function as the data (drift impossible; validate.py checks their
-    bounds). The slips this script hunts live in body text, captions,
-    key numbers, and tooltips rendered outside <svg>.
-    """
-    if not keep_svg:
-        src = re.sub(r"<svg\b.*?</svg>", " ", src, flags=re.S | re.I)
-    src = re.sub(r"<style\b.*?</style>", " ", src, flags=re.S | re.I)
-    src = re.sub(r"<script\b.*?</script>", " ", src, flags=re.S | re.I)
-    src = re.sub(r"<!--.*?-->", " ", src, flags=re.S)
-    src = re.sub(r"<[^>]+>", " ", src)
-    return html.unescape(src)
+    def handle_starttag(self, tag, attrs):
+        if tag in ('script', 'style', 'template', 'head'):
+            self.skip += 1
+        if self.skip:
+            return
+        a = dict(attrs)
+        if a.get('data-count'):
+            self.counts.append(a['data-count'])
+        if tag in ('q', 'blockquote'):
+            self.quote_stack.append([])
 
+    def handle_startendtag(self, tag, attrs):
+        self.handle_starttag(tag, attrs)
+        self.handle_endtag(tag)
 
-def norm(s: str) -> str:
-    """Whitespace-stripped, comma-stripped, lowercased for trace checks.
+    def handle_endtag(self, tag):
+        if tag in ('script', 'style', 'template', 'head'):
+            self.skip = max(0, self.skip - 1)
+            return
+        if self.skip:
+            return
+        if tag in ('q', 'blockquote') and self.quote_stack:
+            self.quotes.append(' '.join(self.quote_stack.pop()).strip())
+        if tag in ('p', 'div', 'li', 'text', 'td', 'th', 'figcaption', 'br'):
+            self.parts.append('\n')
 
-    CJK text contains no spaces, so whitespace-stripping alone cannot
-    bridge a source line broken mid-sentence vs the page's reflow —
-    punctuation-only differences remain visible in the mismatch print
-    for manual judgment; everything else must match.
-    """
-    return re.sub(r"[\s,]", "", html.unescape(s)).lower()
-
-
-def numbers_in(text: str):
-    """3+ digit integers and any decimal number (the slip-prone classes)."""
-    out = set()
-    for m in re.finditer(r"\d+(?:\.\d+)?", text):
-        raw = m.group(0)
-        if "." in raw or len(raw.replace(".", "")) >= 3:
-            out.add(raw)
-    return sorted(out, key=lambda x: (len(x), x))
-
-
-def figures(src: str):
-    """(start, end, block) for each <figure>...</figure>."""
-    return [(m.start(), m.end(), m.group(0))
-            for m in re.finditer(r"<figure\b.*?</figure>", src, flags=re.S | re.I)]
+    def handle_data(self, data):
+        if not self.skip:
+            self.parts.append(data)
+            for quote in self.quote_stack:
+                quote.append(data)
 
 
-def quoted_blocks(src: str):
-    """Visible text of every <blockquote>/<q>, excluding attribution.
-
-    The attribution (editor-added source note) lives inside the element
-    as `<span class="src">` / `<cite>` / `<footer>`; it is editorial, not
-    quoted material, so it is dropped before the fidelity compare.
-    """
-    out = []
-    for m in re.finditer(r"<(blockquote|q)\b[^>]*>(.*?)</\1>", src, flags=re.S | re.I):
-        inner = re.sub(
-            r"<span\b[^>]*class=[\"']src[\"'][^>]*>.*?</span>", " ", m.group(2),
-            flags=re.S | re.I,
-        )
-        inner = re.sub(
-            r"<(cite|footer)\b[^>]*>.*?</\1>", " ", inner, flags=re.S | re.I,
-        )
-        out.append(visible_text(inner))
-    return out
+def numeric_tokens(text):
+    return [format(Decimal(m.group().replace(',', '').replace('−', '-')).normalize(), 'f')
+            for m in NUMBER.finditer(unicodedata.normalize('NFKC', text))]
 
 
-def main() -> int:
+def normalize(text):
+    return re.sub(r'\s+', '', unicodedata.normalize('NFKC', text)).casefold()
+
+
+def scan(output, source, supplement='', ignore=''):
+    page = Text()
+    page.feed(output)
+    page.close()
+    text = ''.join(page.parts)
+    original, added = set(numeric_tokens(source)), set(numeric_tokens(supplement))
+    ignore_re = re.compile(ignore) if ignore else None
+    numbers = []
+    for token, count in Counter(numeric_tokens(text + ' ' + ' '.join(page.counts))).items():
+        if ignore_re and ignore_re.fullmatch(token):
+            continue
+        match = 'input' if token in original else 'supplement' if token in added else 'none'
+        numbers.append({'number': token, 'occurrences': count, 'literal_match': match})
+    return {
+        'numbers': numbers,
+        'quotes_to_review': [q for q in page.quotes if normalize(q) and
+                             normalize(q) not in normalize(source + '\n' + supplement)],
+        'text': text,
+        'limitation': 'Literal matches do not verify attribution, units, conditions, or truth. '
+                      'Nonmatches may be valid calculations, axis ticks, or translations. '
+                      'Dynamic JS/canvas text and Chinese number words are not audited.',
+    }
+
+
+def main():
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("output", help="built output.html")
-    ap.add_argument("input", help="input.md — the source of truth")
-    ap.add_argument("--phrases", default="",
-                    help="comma-separated quantity-bearing phrases that must "
-                         "appear in the page (each must trace to input too)")
-    ap.add_argument("--ignore", default="",
-                    help="regex of numbers to skip (e.g. a known derived form)")
+    ap.add_argument('output', type=Path)
+    ap.add_argument('input', type=Path)
+    ap.add_argument('--sources', type=Path)
+    ap.add_argument('--phrases', default='')
+    ap.add_argument('--ignore', default='', help='regex on normalized numeric tokens')
+    ap.add_argument('--json', action='store_true')
     args = ap.parse_args()
-
-    out_src = Path(args.output).read_text(encoding="utf-8")
-    in_norm = norm(Path(args.input).read_text(encoding="utf-8"))
-    vis = visible_text(out_src, keep_svg=False)
-    vis_svg = visible_text(out_src)
-
-    fails = []
-
-    figs = figures(out_src)
-    # Figures whose caption declares a derivation (推算): their numbers
-    # are honest-by-declaration (the documented fix for a derived value
-    # is a caption footnote, not silence) — exempt from number
-    # provenance, same escape hatch the count-up check uses.
-    declared_nums = set()
-    for _, _, block in figs:
-        if "推算" in visible_text(block):
-            declared_nums.update(numbers_in(visible_text(block, keep_svg=False)))
-
-    # --- 1. number provenance -------------------------------------------
-    ignore_re = re.compile(args.ignore) if args.ignore else None
-    for num in numbers_in(vis):
-        if ignore_re and ignore_re.fullmatch(num):
-            continue
-        if num in declared_nums:
-            continue
-        if norm(num) not in in_norm:
-            fails.append(f"number not in input: {num!r}")
-
-    # --- 2. count-up provenance -----------------------------------------
-    for m in re.finditer(r'data-count="([^"]+)"', out_src):
-        val = m.group(1)
-        if norm(val) in in_norm:
-            continue
-        declared = any(
-            val in block and "推算" in visible_text(block) for _, _, block in figs
-        )
-        if not declared:
-            fails.append(
-                f"count-up value {val!r} not in input and no 推算 declaration "
-                f"in its <figure> caption"
-            )
-
-    # --- 3. quote fidelity ----------------------------------------------
-    for q in quoted_blocks(out_src):
-        nq = norm(q)
-        if nq and nq not in in_norm:
-            fails.append(f"quote not verbatim in input: {q[:80]!r}")
-
-    # --- 4. required phrases --------------------------------------------
-    for phrase in [p for p in args.phrases.split(",") if p.strip()]:
-        if norm(phrase) not in norm(vis_svg):
-            fails.append(f"required phrase missing from page: {phrase.strip()!r}")
-
-    if fails:
-        for f in fails:
-            print(f"FAIL: {f}")
-        print(f"deep_check: {len(fails)} failure(s) — fix, rebuild, re-check")
-        return 1
-    print("deep_check: PASS — numbers, count-ups, and quotes all trace to input")
-    return 0
+    try:
+        source_path = args.sources or args.input.parent / 'sources.md'
+        supplement = source_path.read_text(encoding='utf-8') if source_path.is_file() else ''
+        if args.sources and not source_path.is_file():
+            raise FileNotFoundError(source_path)
+        # URL ids are not candidate numeric evidence.
+        supplement = re.sub(r'https?://\S+', ' ', supplement)
+        report = scan(args.output.read_text(encoding='utf-8'),
+                      args.input.read_text(encoding='utf-8'), supplement, args.ignore)
+    except (OSError, UnicodeError, ValueError, re.error) as exc:
+        ap.exit(2, f'deep_check: {exc}\n')
+    report['missing_phrases'] = [p.strip() for p in args.phrases.split(',')
+                                 if p.strip() and normalize(p.strip()) not in normalize(report['text'])]
+    del report['text']
+    if args.json:
+        print(json.dumps(report, ensure_ascii=False, indent=2))
+    else:
+        print('Literal review scan — no factual or semantic verdict')
+        for item in report['numbers']:
+            print(f"  {item['number']}: literal match={item['literal_match']} "
+                  f"({item['occurrences']} occurrence(s))")
+        for quote in report['quotes_to_review']:
+            print(f'  REVIEW quote wording/translation: {quote[:160]}')
+        for phrase in report['missing_phrases']:
+            print(f'  FAIL explicit phrase missing: {phrase}')
+        print(report['limitation'])
+    return 1 if report['missing_phrases'] else 0
 
 
-if __name__ == "__main__":
-    sys.exit(main())
+if __name__ == '__main__':
+    raise SystemExit(main())

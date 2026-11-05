@@ -1,47 +1,19 @@
-# Glyph · Conceptual (no-statistics inputs)
+# Conceptual diagrams
 
-For inputs with NO measurable data — essays, criticism, philosophy,
-talks — where the argument still has STRUCTURE that geometry can carry.
-The rule that keeps these honest: **draw only what the source describes;
-invent nothing, not even a plausible continuation.**
+Useful for qualitative material whose relationships or mechanisms benefit
+from spatial expression. Do not force essays or talks into numerical charts.
 
-## Forms
+Possible forms include a concept curve, lineage/taxonomy, source metaphor,
+barrier/threshold, mirrored perspectives, or a staged mechanism. These are
+examples; invent another expression when it explains the material better.
 
-- **Concept curve**: qualitative axes, the curve follows only the
-  source-described segments (a "rose, then fell back" curve omits the
-  recovery the source never mentions — an invented recovery is
-  fabrication in curve form). Hover anchors sit at the inflection
-  points.
-- **Dual-line concept curve**: two qualitative series when the argument
-  IS their relationship. Same honesty: only described segments.
-- **Lineage / taxonomy**: a school or idea branching from shared roots;
-  the barrier or break drawn as a distinct element.
-- **Source-metaphor diagram**: the text's own metaphor drawn literally.
-  Nothing beyond the metaphor.
-- **Gate / flip**: converging drive arrows meet a barrier; crossing it
-  is the claim (the far side differs in kind, not degree).
-- **Mirror**: an entity and its reflection — solid ink on one side,
-  dashed-accent phantom on the other; the reflection axis is the
-  argument.
-
-## Data contract
-
-- Every segment, node, and edge traces to a source statement — if a
-  shape can't point at its sentence, it doesn't get drawn.
-- Qualitative step/axis heights may be illustrative; the caption says so.
-- Hover still applies: anchor points at the shape's meaningful positions
-  (inflections, gate, mirror axis), tooltip carries the source sentence.
-
-## Caption language (verbatim)
-
-- 「概念示意，非数值数据」 「概念曲线，非实测数据」
-- 「台阶高度为定性示意，非实测数值」 「横轴等距仅为事件顺序示意，非时间比例」
-
-## Constraints
-
-- No metric axes disguised as qualitative ones; label qualitative axes
-  as qualitative.
-- Never simulate precision the source lacks (no decimal ticks, no
-  measured-looking gridlines).
-- One accent per chart still applies — the argument's turning point gets
-  it (the flip marker, the phantom, the barrier).
+- Distinguish source relationships from explanatory analogies or proposed
+  interpretations. Do not invent a causal link or continuation of a trend.
+- Label qualitative axes and schematic geometry. Illustrative heights or
+  distances do not imply measured magnitude, duration, or precision.
+- A concept curve includes only the described phases; a plausible recovery
+  beyond the source is still an unsupported claim unless explicitly hypothetical.
+- Text or captions can carry source anchors. A short label, an annotated
+  figure, or a disclosure can explain a concept without a hover contract.
+- Example captions: “概念示意，非实测数据” or “等距表示顺序，非时间比例”.
+  Use wording that accurately describes the actual encoding.

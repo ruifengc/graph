@@ -1,57 +1,20 @@
-# Expression · Relations
+# Relationship maps
 
-Directed relationship map — who curries favor with whom, who hates whom,
-who protects whom.
+Useful for dependencies, associations, system components, or relationships
+between people and ideas.
 
-## Proven form
-
-- Nodes = people/entities; edges = directed relations.
-- **Line semantics carry meaning**: solid = one kind of relation, dashed
-  = another. State the mapping in the caption.
-- ≤12 nodes; node labels short, relation arrows labeled with a verb
-  phrase.
-- The protagonist's relations on `--accent`; the rest on the ladder.
-- Arrowheads as SVG `<marker>` with theme-following fill.
-
-## Mirror / branch compositions (two-way corroboration)
-
-When the argument is "the same fact, corroborated from two sides" —
-express it as a SPATIAL composition, not a numbered sequence:
-
-- A central hub naming the shared fact; two branches fan out left and
-  right, each a short vertical chain; the branches converge at a bottom
-  junction carrying the conclusion.
-- **The symmetry is the argument**: two independent directions landing on
-  the same point reads as corroboration. A numbered list flattens that
-  and loses the "two-way" claim.
-- Numbered sequences are for temporal order / causal chains; mirrored
-  branches are for corroboration / opposition. Choose by the claim.
-- Same visual grammar for opposition: two columns facing a shared axis
-  (contrast.md) when the sides are parallel paths, branches when they
-  converge.
-
-## Data contract
-
-- Every node and edge traces to the input — nothing invented. If the
-  input implies a relation without stating it, mark it (e.g. 推测).
-- The caption states what kind of structure this is (关系示意, not a
-  measured network).
-
-## Constraints
-
-- No node without a label; no edge without a direction.
-- **Edge labels stay short** (≤ ~10 chars on the chart); anything longer
-  goes into the tooltip. Long labels between nodes read as text dumped
-  on the diagram.
-- **Don't let edges of one node fan into a label pile.** When a node has
-  many relations, stagger the labels, route edges through separate
-  corridors, or keep only the pivotal relations and move the rest to the
-  tooltip or a caption list.
-- More than ~12 nodes → split into two maps or keep only the pivotal
-  relations.
-- Decoration (icons, portraits) only if it carries information.
-
-## Pitfalls
-
-- Edge labels overlapping between adjacent nodes (stagger, or tooltip).
-- A hub node's labels crowding its neighbors (see constraints).
+- Name nodes and explain edge semantics. Use direction when the relationship
+  is directed; do not add arrows to an undirected association.
+- Support important relationships with source locations. Distinguish an
+  inferred connection from one explicitly described; preserve uncertainty.
+- Use short edge labels and route paths away from text. Fan out crowded
+  attach points and move lengthy explanations beside the map or into
+  accessible detail instead of piling labels into a hub.
+- Group or split a complex map when that helps orientation; no universal
+  node limit is necessary. Preserve important omitted connections in an
+  overview/detail view or explain the scope.
+- Mirrored branches can show independent accounts or opposed positions,
+  but symmetry is not evidence of corroboration. Label each source and
+  show whether the accounts are actually independent.
+- A diagram of a mechanism can be more appropriate than a measured network.
+  Explain which kind the reader is looking at.

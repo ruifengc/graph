@@ -1,38 +1,15 @@
-# Glyph · Icons (semantic shapes, not datasets)
+# Icons and visual analogies
 
-Hand-drawn SVG icons that carry MEANING and DIRECTION — for claims a bar
-row or comparison table would flatten into "just numbers".
+Useful for semantic identity, direction, or an intuitive sense of scale.
 
-## Data contract
-
-- Icons carry semantics and direction, NEVER exact values — precision
-  stays in labels / hover / caption.
-- Isotype counts MUST annotate the baseline ("1 颗 = 基准值"); icons
-  never carry exact numbers.
-- Scale rulers MUST share one scale (same px-per-unit); a different
-  scale is a lie.
-- Same facts as the equivalent table — icon expression is a
-  presentation layer, not new claims.
-- Fits these claims: multiples (isotype counts), flow / direction
-  (arrows = the argument), source metaphor (draw the metaphor
-  literally), order-of-magnitude contrast (same-scale rulers).
-
-## Icon library (hand-written, token-colored)
-
-Define each icon ONCE in `<defs>`, reference with `<use href="#id">`,
-color via CSS classes (`var(--ink)` / `var(--accent)` / `var(--bg)`) so
-themes just work. A reusable starter set: person (head circle + shoulder
-path), institution (pediment + columns + base), house (roof + body),
-stock (polyline + arrowhead corner), coin (circle + glyph). Verify every
-`href` resolves to a `<defs>` id — a broken href renders nothing.
-
-## Constraints
-
-- Emoji are NOT an acceptable substitute — they break theme colors and
-  look un-designed.
-- Don't icon-ify everything: a ranked growth list is still a bar chart.
-  Icons fit CLAIMS, not datasets.
-- A floating average line (metaphor pattern) is a STATISTICAL claim —
-  the caption states what the line means and that it belongs to no one
-  depicted.
-- Icons still get the hover layer (the contract applies to every chart).
+- Distinguish semantic symbols from measured marks. An isotype can encode
+  a count when its unit is explicit; an illustrative icon need not encode
+  a quantity. See [unit dots](dots.md) for counting principles.
+- Scale comparisons use compatible units and a common scale. Distinguish
+  a source metaphor from a new explanatory analogy.
+- Reuse SVG definitions where useful and verify use/href targets exist.
+  Labels should explain unfamiliar symbols; meaning must not depend on color.
+- A floating average or reference line is a statistical claim: state its
+  definition and population rather than presenting it as decoration.
+- Choose illustration style for the content and delivery. Hover, handmade
+  paths, and a particular icon set are not required.

@@ -1,152 +1,141 @@
 #!/usr/bin/env python3
-"""graph validate — mechanical self-check of a built HTML artifact.
+"""Static HTML checks; no requirements for themes, charts, hover, or motion.
 
-Usage:
-    python3 scripts/validate.py <output.html>
-
-Checks the non-negotiable rules that can be verified mechanically:
-themes present, toggle exists, hover + tooltip, reduced-motion honored,
-draw-in present, no leftover local file references, no hardcoded SVG
-colors. Visual review is still the author's job (SKILL.md pipeline 6) —
-this script is the floor, not the ceiling.
-
-Exit code 0 = pass, 1 = fail (fix findings before delivery).
+Usage: python3 scripts/validate.py page.html [--standalone]
+Only literal HTML references are inspected. CSS/JS-generated dependencies,
+rendering, accessibility quality, and factual accuracy require separate review.
+Exit 0: no detected structural/resource failures; 1: failures; 2: usage/IO error.
 """
-import re
-import sys
+import argparse
+from collections import Counter
+from html.parser import HTMLParser
 from pathlib import Path
-
-EXTERNAL = re.compile(r"^(https?:|//|data:|#|mailto:)")
-
-
-def main() -> int:
-    path = Path(sys.argv[1])
-    html = path.read_text(encoding="utf-8")
-    findings: list[str] = []
-    warns: list[str] = []
-
-    # 1. no leftover local file references (everything we make must be inlined)
-    refs = re.findall(r'(?:href|src)="([^"]+)"', html)
-    local = [r for r in refs if not EXTERNAL.match(r)]
-    if local:
-        findings.append(f"leftover local references (not inlined): {sorted(set(local))[:6]}")
-
-    # 2. both theme token blocks present
-    for t in ("day", "night"):
-        if f'data-theme="{t}"' not in html:
-            findings.append(f'theme block "{t}" missing (body[data-theme="{t}"]{{...}})')
-
-    # 3. theme toggle control
-    if not re.search(r'toggle|btnDay|btnNight', html, re.I):
-        findings.append("theme toggle control missing")
-
-    # 4. hover-to-read
-    if "mousemove" not in html:
-        findings.append("hover handler missing (mousemove)")
-    if not re.search(r'tip|tooltip', html, re.I):
-        findings.append("hover tooltip element missing")
-
-    # 5. reduced-motion honored
-    if "prefers-reduced-motion" not in html:
-        findings.append("prefers-reduced-motion block missing")
-
-    # 6. draw-in motion (pathLength + dashoffset + keyframes)
-    if not re.search(r'stroke-dashoffset', html) or "@keyframes" not in html:
-        findings.append("draw-in motion missing (stroke-dashoffset + @keyframes)")
-
-    # 7. count-up
-    if "requestAnimationFrame" not in html:
-        warns.append("no count-up animation found (ok if page has no key numbers)")
-
-    # 8. no hardcoded colors inside SVG (must use tokens via CSS vars)
-    hard = re.findall(r'(?:stroke|fill)="(?:#[0-9a-fA-F]{3,8}|rgb\()', html)
-    if hard:
-        warns.append(f"hardcoded SVG colors found (should be var(--...)): {sorted(set(hard))[:6]}")
-
-    # 9. tokens referenced (var(--bg) etc.)
-    if "var(--bg)" not in html:
-        warns.append("token variables not referenced (var(--bg) absent)")
-
-    # 10. data series classes must not use --faint (D16: faint is a text
-    #     layer, too low-contrast ≈1.4:1 to carry data)
-    faint_data = re.findall(
-        r'\.(?:seg|bar|dot|series|chip|ring|arc|point)[^{}]*\{[^}]*var\(--faint\)',
-        html,
-    )
-    if faint_data:
-        warns.append(
-            f"data series class uses --faint (invisible on paper, use --ink/"
-            f"muted/accent): {sorted(set(faint_data))[:4]}"
-        )
-
-    # 11. animation trigger mechanics (real bug: .grow/.fade-in present
-    #     but no trigger rule → every animated child stays hidden, the
-    #     chart renders as labels only). Either element-level .on rules
-    #     (.grow.on, .fade-in.on with per-element watch) or a container
-    #     propagation rule (.chart.on .grow, .chart.on .fade-in).
-    if re.search(r'\.grow\s*\{', html):
-        if not re.search(r'\.grow\.on\s*\{', html) and not re.search(r'\.chart\.on\s+\.grow\s*\{', html):
-            findings.append(
-                ".grow present but no trigger rule (.grow.on or .chart.on .grow) — bars stay at scaleX(.001), invisible"
-            )
-    if re.search(r'\.fade-in\s*\{', html):
-        if not re.search(r'\.fade-in\.on\s*\{', html) and not re.search(r'\.chart\.on\s+\.fade-in\s*\{', html):
-            findings.append(
-                ".fade-in present but no trigger rule (.fade-in.on or .chart.on .fade-in) — elements stay at opacity 0, invisible"
-            )
-
-    # 12. duplicate class attribute on one tag (the second silently wins,
-    #     styling/animation of the first is lost; passes all other checks)
-    dup_class = re.findall(r'<[^>]*\bclass="[^"]*"[^>]*\bclass="', html)
-    if dup_class:
-        findings.append(
-            f"duplicate class= on one element ({len(dup_class)}×) — second wins, first silently lost; merge the classes"
-        )
-
-    # 13. SVG geometry bounds — elements outside their viewBox get
-    #     clipped (warn level: heuristic, catches the common overshoots)
-    for m in re.finditer(r'<svg[^>]*viewBox="0 0 (\d+) (\d+)"[^>]*>(.*?)</svg>', html, re.S):
-        W, H = int(m.group(1)), int(m.group(2))
-        body = m.group(3)
-        for t in re.finditer(r'<text[^>]*\bx="(-?[\d.]+)"[^>]*\by="(-?[\d.]+)"', body):
-            x, y = float(t.group(1)), float(t.group(2))
-            if x < -2 or x > W + 2 or y < -2 or y > H + 2:
-                warns.append(f"text outside viewBox ({x:.0f},{y:.0f} in 0 0 {W} {H}): {t.group(0)[:56]}")
-        for c in re.finditer(r'<circle[^>]*\bcx="(-?[\d.]+)"[^>]*\bcy="(-?[\d.]+)"[^>]*\br="(-?[\d.]+)"', body):
-            cx, cy, r = float(c.group(1)), float(c.group(2)), float(c.group(3))
-            if cx - r < -2 or cx + r > W + 2 or cy - r < -2 or cy + r > H + 2:
-                warns.append(f"circle outside viewBox (cx={cx:.0f} cy={cy:.0f} r={r:.0f} in 0 0 {W} {H})")
-        for q in re.finditer(
-            r'<rect[^>]*\bx="(-?[\d.]+)"[^>]*\by="(-?[\d.]+)"[^>]*\bwidth="(-?[\d.]+)"[^>]*\bheight="(-?[\d.]+)"',
-            body,
-        ):
-            x, y, w, h = float(q.group(1)), float(q.group(2)), float(q.group(3)), float(q.group(4))
-            if x < -2 or y < -2 or x + w > W + 2 or y + h > H + 2:
-                warns.append(f"rect outside viewBox (x={x:.0f} y={y:.0f} w={w:.0f} h={h:.0f} in 0 0 {W} {H})")
-
-    # 14. hover wiring per chart — every chart needs a hover layer
-    #     (warn level: heuristic count of hover bindings vs chart holders)
-    charts = len(re.findall(r'class="chart', html))
-    hovers = len(re.findall(r'mousemove|mouseenter|mouseover', html))
-    if charts and hovers < charts:
-        warns.append(
-            f"{charts} chart holder(s) but only {hovers} hover binding(s) — check charts missing a hover layer"
-        )
-
-    print(f"validate {path.name}  ({len(html)/1024:.1f} KB)")
-    for w in warns:
-        print(f"  WARN  {w}")
-    if findings:
-        for f in findings:
-            print(f"  FAIL  {f}")
-        print("result: FAIL — fix findings before delivery")
-        return 1
-    print("result: PASS")
-    return 0
+from urllib.parse import unquote, urlsplit
 
 
-if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print(__doc__)
-        sys.exit(1)
-    sys.exit(main())
+class Document(HTMLParser):
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.tags = Counter()
+        self.ids = Counter()
+        self.targets = set()
+        self.references = []
+        self.assets = []
+        self.aria = []
+        self.title = []
+        self.in_title = False
+        self.in_head = False
+        self.lang = None
+        self.base = False
+        self.failures = []
+
+    def handle_starttag(self, tag, attrs):
+        self.tags[tag] += 1
+        names = Counter(k for k, _ in attrs)
+        for key, count in names.items():
+            if count > 1:
+                self.failures.append(f'duplicate {key!r} attribute on <{tag}>')
+        a = dict(attrs)
+        if a.get('id'):
+            self.ids[a['id']] += 1
+            self.targets.add(a['id'])
+        if tag == 'a' and a.get('name'):
+            self.targets.add(a['name'])
+        if tag == 'html':
+            self.lang = a.get('lang')
+        if tag == 'base':
+            self.base = True
+        if tag == 'head':
+            self.in_head = True
+        if tag == 'title' and self.in_head:
+            self.in_title = True
+        for key in ('aria-labelledby', 'aria-describedby'):
+            self.aria.extend((a.get(key) or '').split())
+        href = a.get('href') or a.get('xlink:href')
+        if href and href.startswith('#'):
+            self.references.append(unquote(href[1:]))
+        if a.get('src'):
+            self.assets.append(a['src'])
+        if a.get('poster'):
+            self.assets.append(a['poster'])
+        if tag == 'link' and href and set((a.get('rel') or '').lower().split()) & {
+            'stylesheet', 'icon', 'preload', 'modulepreload', 'manifest',
+        }:
+            self.assets.append(href)
+        if tag in ('image', 'use') and href:
+            self.assets.append(href)
+        if tag == 'object' and a.get('data'):
+            self.assets.append(a['data'])
+
+    def handle_startendtag(self, tag, attrs):
+        self.handle_starttag(tag, attrs)
+        self.handle_endtag(tag)
+
+    def handle_endtag(self, tag):
+        if tag == 'title':
+            self.in_title = False
+        if tag == 'head':
+            self.in_head = False
+
+    def handle_data(self, data):
+        if self.in_title:
+            self.title.append(data)
+
+
+def check(path: Path, standalone=False):
+    doc = Document()
+    doc.feed(path.read_text(encoding='utf-8'))
+    doc.close()
+    failures, warnings = list(doc.failures), []
+    for tag in ('html', 'head', 'body'):
+        if not doc.tags[tag]:
+            failures.append(f'missing explicit <{tag}> element')
+    if not ''.join(doc.title).strip():
+        failures.append('missing nonempty title')
+    if not doc.lang:
+        warnings.append('document language is not declared')
+    failures.extend(f'duplicate id: {key}' for key, n in doc.ids.items() if n > 1)
+    failures.extend(f'missing fragment target: #{key}'
+                    for key in sorted(set(doc.references) - doc.targets) if key)
+    failures.extend(f'missing ARIA reference: {key}'
+                    for key in sorted(set(doc.aria) - set(doc.ids)))
+    if doc.base:
+        warnings.append('<base> present: resource paths require browser review')
+    for ref in sorted(set(doc.assets)):
+        parts = urlsplit(ref)
+        if ref.startswith('#') or parts.scheme == 'data':
+            continue
+        if standalone:
+            failures.append(f'non-inlined asset: {ref}')
+        elif parts.scheme or parts.netloc:
+            warnings.append(f'external/runtime asset: {ref}')
+        elif not doc.base:
+            if parts.path.startswith('/'):
+                warnings.append(f'server-root asset requires HTTP review: {ref}')
+            elif parts.path and not (path.parent / unquote(parts.path)).is_file():
+                failures.append(f'missing local asset: {ref}')
+    return failures, warnings
+
+
+def main():
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument('page', type=Path)
+    ap.add_argument('--standalone', action='store_true',
+                    help='reject literal non-inlined HTML asset references (source links allowed)')
+    args = ap.parse_args()
+    try:
+        failures, warnings = check(args.page, args.standalone)
+    except (OSError, UnicodeError, ValueError) as exc:
+        ap.exit(2, f'validate: {exc}\n')
+    print(f'validate {args.page.name}')
+    for message in warnings:
+        print(f'  WARN  {message}')
+    for message in failures:
+        print(f'  FAIL  {message}')
+    print('static checks: ' + ('FAIL' if failures else 'PASS') +
+          ' — rendering, dynamic dependencies, and evidence need separate review')
+    return 1 if failures else 0
+
+
+if __name__ == '__main__':
+    raise SystemExit(main())

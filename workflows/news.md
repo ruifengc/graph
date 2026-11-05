@@ -1,33 +1,15 @@
-# Workflow · News
+# News collections
 
-Inherits: base (read `base.md` first — only the differences below).
+Use with [base.md](base.md). Explain the situation represented by the collection.
 
-## When to use
-
-A digest / batch of related news items (e.g. collected from RSS feeds
-on one topic).
-
-## Special processing steps
-
-1. **Cluster the items.** Read all items, group them into 2–5 story
-   lines (who did what, what changed). The page is about the
-   *situation the batch describes*, not about listing articles.
-2. **The claim is the synthesis** — what the batch as a whole shows
-   (e.g. "three sub-sectors, three clocks") that no single item shows.
-3. **Each story line earns evidence:** its key numbers and dates, each
-   with its source article (name + date + URL).
-
-## Special glyph tendencies
-
-- Timeline glyph shines here — events across items on one axis often
-  tell the story better than charts.
-
-## Special honesty discipline
-
-- **Conflicting items are surfaced, not smoothed over:** the page
-  notes disagreement in captions ("sources differ on X").
-
-## Recorded gaps
-
-Framework status: first version — no real news run yet; record gaps in
-runtime notes when one lands.
+- Distinguish event dates from publication/update dates and order events
+  accordingly. Group coverage by developments or questions rather than
+  making one card for each article.
+- Attribute reporting and opinions. Syndicated copies are not independent
+  corroboration; prefer original reporting or primary material where available.
+- Preserve disagreements, corrections, and uncertainty. Several stories
+  need not support one verdict; synthesis should remain identifiable as
+  your synthesis and supported by the cited material.
+- Keep title/publisher/date/URL and useful sections for significant claims.
+  For developing situations, state the coverage date and verify current
+  claims with available retrieval tools.

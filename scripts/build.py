@@ -7,9 +7,12 @@ Usage:
 Input HTML may reference local stylesheets and scripts via
 <link rel="stylesheet" href="..."> and <script src="..."></script>.
 Local files are inlined; remote URLs are kept as-is (declared external
-resources are allowed per SKILL.md rule 3). Data files are inlined the
+resources may be used when appropriate). Data files are inlined the
 same way (<script src="data.js">).
 
+This is a convenience inliner, not a full asset bundler: images, fonts,
+CSS imports/url() references, and JS module imports are not packaged.
+Review dependencies before moving the output or promising offline delivery.
 Run validate.py on the output afterwards.
 """
 import re

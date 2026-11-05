@@ -2,70 +2,26 @@
 
 **English** · [中文](README.zh-CN.md)
 
-Turn one piece of content — an article, a research report, a paper, a
-news digest, a video transcript, or a dataset — into a single-file
-interactive HTML page that *explains it visually*.
+Turn an article, video, paper, report, or dataset into a visual HTML explainer that helps readers understand and explore the source material.
 
-The page is a tour guide, not a document: hand-written SVG charts carry
-the argument, short lines of text add the punchlines, and interaction
-(hover-to-read, day/night themes) serves readers who want to dig in.
-
-## What you get
-
-- **One self-contained HTML file** — all CSS, JS, SVG, and data
-  inlined. Double-click to open, send it to a friend, drop it on a USB
-  stick. No framework, no CDN, no build step for the reader.
-- **Day/night themes** — Paper (warm gray + vermillion) and Ink
-  (near-black + gold), toggle in the corner.
-- **Hand-written SVG charts by default** — a zero-dependency page is the
-  easy case. The visual language is defined by the skill's design tokens
-  rather than a chart library.
-- **Interactions carry information** — when an interaction surfaces data,
-  changes the reading, or re-judges the state, it earns its place; a
-  show-off effect that exists only to impress does not. Restraint is the
-  aesthetic.
-- **Honest by construction** — every number traces to the input or a
-  cited source; log axes, sampling, rounding, and assumptions are
-  declared in the captions; the source line is mandatory.
+Graph adapts the language, structure, and visual expression to the material. A mechanism may benefit from an interactive comparison; an interview may need to preserve differing viewpoints; a personal account may be best organized around observations and experiences. It preserves important evidence and uncertainty without forcing every subject into the same layout.
 
 ## Usage
 
-graph is an Agent Skills style skill — `SKILL.md` is the entry point.
-Install it into your agent's skill directory (Claude Code, Codex,
-Hermes, or any skill-aware agent), then ask it to visualize a piece of
-content:
+Install this directory as `graph` in your agent's skill directory, then ask:
 
-```
-Turn this article into a page: <paste article>
-Visualize this data: <dataset>
-Explain this paper as an HTML page: <arxiv link or PDF text>
+```text
+Explain this article as a visual page: <URL or text>
+Turn this video into a visual guide: <URL or transcript>
+Explain this paper's method, results, and limitations: <PDF or link>
+Make an explainer from this dataset: <file>
 ```
 
-The agent reads `SKILL.md` and follows the five-stage pipeline:
-understand & route → compose the narrative plan → express → assemble →
-build, validate, archive — plus optional LAN sharing.
+The agent needs suitable tools to retrieve or transcribe source material. It should state meaningful gaps in the material it can access.
 
-## Repository layout
+The page uses interaction when it helps explain the content, keeps visualizations and explanations consistent, and offers light and dark themes when appropriate for interactive reading. It distinguishes source claims, interpretation, teaching assumptions, and uncertainty.
 
-```
-SKILL.md          entry point: pipeline, rules, division of labor
-scripts/          build.py (multi-file → single HTML), validate.py (self-check),
-                  serve.py (LAN sharing of a built page)
-references/       design tokens, narrative structure, interactions, glyph library
-workflows/        per-input-type processing flows (article / paper / data / news / transcript)
-```
-
-## Design philosophy
-
-**Style is law, execution is free.** The skill fixes the style system
-(colors, type, spacing, motion, honesty rules, technical pitfalls) and
-the information (what the input means, what must not happen) — but
-never the specific drawing. The composing agent has full creative
-freedom within those bounds, which is what keeps every page alive
-instead of templated.
-
-The skill evolves from real runs: feedback from actual pages flows back
-into the references, so the knowledge grows with use.
+`workflows/` and `references/` provide optional guidance for specific inputs and design problems. `scripts/` contains optional document checks, a browser smoke check, and packaging and preview helpers. Run the helper checks with `python3 -m unittest discover -s tests -v`. Automated checks do not verify factual accuracy or page-specific interaction behavior.
 
 ## License
 

@@ -6,9 +6,33 @@
 
 Graph 根据材料选择语言、结构与视觉表达：机制可以通过交互比较来讲解，访谈可能需要保留不同观点，个人记录则可以围绕观察和经历展开。页面保留重要证据和不确定性，不强求所有内容使用相同布局。
 
+## 看看 Graph 如何讲解
+
+**[Inside Graph：让关系看得见](https://lab.ruifengc.com/graph/inside-graph/)** 用一段虚构的过河旅程解释这个 skill 的设计。在摘要、共用尺度的比较和交互模型之间切换；改变到达时刻，观察等待时间、总耗时和路线建议如何同步变化。
+
+[![Inside Graph 预览：虚构材料与三条路线的时间轴并置，可切换表达方式、调整到达时刻](docs/images/inside-graph-preview.png)](https://lab.ruifengc.com/graph/inside-graph/)
+
+**[打开交互演示 →](https://lab.ruifengc.com/graph/inside-graph/)** · 中文 / English · 浅色 / 深色
+
+这是用 Graph 制作的教学演示，路线与时刻均为虚构。[材料与假设](docs/demo/source.md) · [页面源码](docs/demo/index.html)。
+
+## 安装
+
+把下面这段话复制给你的 agent：
+
+```text
+请帮我安装 graph skill，仓库地址：https://github.com/ruifengc/graph。
+请使用你当前 agent 和环境支持的 skill 安装方式，优先安装到用户级目录，
+并保留 SKILL.md 及配套目录的完整结构。
+如果已经安装，请在保留本地修改的前提下更新。
+完成后告诉我安装位置、如何开始使用，以及是否需要开启新会话。
+```
+
+agent 需要能访问网络，并有权限在当前环境中安装 skill。
+
 ## 使用
 
-把本目录以 `graph` 安装到 agent 的 skill 目录，然后提出任务：
+安装后，向 agent 提出任务：
 
 ```text
 把这篇文章做成可视化讲解页：<链接或正文>
